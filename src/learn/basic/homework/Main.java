@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package learn.basic.homework;
 
 /**
  *
@@ -38,7 +38,7 @@ public class Main {
     bk2.SetAccno("123454");
     
      Bank[] client = {bk,bk1,bk2};
-     Main mn = new Main();
+     //Main mn = new Main();
     fr.PrintClient(client);
     }
     

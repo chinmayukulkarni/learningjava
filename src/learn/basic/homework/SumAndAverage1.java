@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package learn.basic.homework;
 //Modify the program to sum from 111 to 8899, and compute the average
 /**
  *

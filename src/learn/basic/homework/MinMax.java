@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package learn.basic.homework;
 //Create an array of 10 random numbers, write a program to find min and max number from the array
 
 /**

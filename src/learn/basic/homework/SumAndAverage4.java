@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package learn.basic.homework;
 //Modify the program to sum only the odd numbers from 1 to 100, and compute the average. 
 /**
  *

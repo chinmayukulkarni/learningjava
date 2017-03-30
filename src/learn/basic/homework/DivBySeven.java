@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package learn.basic.homework;
 // Write a program to create an array of numbers divisible by 7 from 1 to 100. Compute their sum.
 
 /**

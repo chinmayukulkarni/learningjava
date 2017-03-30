@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package learn.basic.homework;
 //create an array of numbers 1,7,8,9,10,11. Compute Sum and average Add them and display the result.
 /**
  *
