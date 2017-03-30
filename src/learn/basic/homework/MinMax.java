@@ -13,7 +13,7 @@ package learn.basic.homework;
 public class MinMax {
 
     public static void main(String[] args) {
-        int[] random = {3,4,9,10,2,7,1,5,8,6};
+        int[] random = {4,6,1,5,3,8,2,7,9,8,10};
         MinMax mm = new MinMax();
         mm.sort(random);
 

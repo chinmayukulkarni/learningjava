@@ -14,7 +14,7 @@ public class CozaLozaWoza {
 
 	public void cozalozawoza() {
 		for (int i = 1; i <= 110; i++) {
-			if (i % 15 == 0) {
+			if (i % 3 == 0 && i % 5 == 0) {
 				System.out.print(" CozaLoza ");
 			} else if (i % 3 == 0) {
 				System.out.print(" Coza ");
@@ -26,7 +26,7 @@ public class CozaLozaWoza {
 				System.out.print(" " + i);
 			}
 			if (i % 11 == 0) {
-				System.out.println("");
+				System.out.println(" ");
 			}
 		}
 	}
