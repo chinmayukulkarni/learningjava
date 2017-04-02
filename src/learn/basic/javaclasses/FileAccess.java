@@ -54,22 +54,22 @@ public class FileAccess {
 		// stream.write(myContentByteArray);
 		// stream.close();
 
-				FileAccess fl = new FileAccess();
+		FileAccess fl = new FileAccess();
 		fl.writeFile("temp2.txt", "data written in file successfully");
-//		// First way to read a file
-//		File referenceToTheFile = new File("temp.txt");
-//		InputStream inputStream = new FileInputStream(referenceToTheFile);
-//		InputStreamReader reader = new InputStreamReader(inputStream);
-//		BufferedReader bufferedReader = new BufferedReader(reader);
-//		String fileContent = bufferedReader.readLine();
-//		System.out.println("File contents are: " + fileContent);
+		// // First way to read a file
+		// File referenceToTheFile = new File("temp.txt");
+		// InputStream inputStream = new FileInputStream(referenceToTheFile);
+		// InputStreamReader reader = new InputStreamReader(inputStream);
+		// BufferedReader bufferedReader = new BufferedReader(reader);
+		// String fileContent = bufferedReader.readLine();
+		// System.out.println("File contents are: " + fileContent);
 
 		// Second way to read a file.
 		FileReader myReader = new FileReader("temp1.txt");
 		BufferedReader in = new BufferedReader(myReader);
 		String fileContent1 = in.readLine();
 		System.out.println("New File content : " + fileContent1);
-		
+
 	}
 
 	public void readFile(String file, String content) throws IOException {
@@ -88,12 +88,12 @@ public class FileAccess {
 		stream.write(myContentByteArray);
 		stream.close();
 	}
-	
-	public void writeFile(String file,String content) throws IOException{
+
+	public void writeFile(String file, String content) throws IOException {
 		File FileRefrance = new File(file);
 		if (FileRefrance.exists()) {
 			System.out.println("File exists");
-		
+
 		} else {
 			System.out.println("File does not exist new one created");
 		}
@@ -101,7 +101,7 @@ public class FileAccess {
 		byte[] data = content.getBytes();
 		outstream.write(data);
 		outstream.close();
-		
+
 	}
 
 }
