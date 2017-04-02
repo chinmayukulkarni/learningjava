@@ -19,7 +19,7 @@ public class Car {
 
 	 // This method will explain how car accelerates
 	public void accelerateCar(){
-		 
+		
 	 }
 	public void breakCar(){
 		 
