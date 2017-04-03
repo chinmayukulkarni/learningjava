@@ -15,7 +15,7 @@ public class MinMax {
 	public static void main(String[] args) {
 		int[] random = { 10, 6, 1, 5, 3, 8, 2, 7, 9, 8, 4 };
 		MinMax mm = new MinMax();
-		mm.sort(random);
+		mm.sort(random); 
 
 	}
 

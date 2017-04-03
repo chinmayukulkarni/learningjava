@@ -6,7 +6,7 @@ package learn.basic.homework;
 //and so on. The output shall look like:
 //1 2 Coza 4 Loza Coza Woza 8 Coza Loza 11 
 //Coza 13 Woza CozaLoza 16 17 Coza 19 Loza CozaWoza 22 
-//23 Coza Loza 26 Coza Woza 29 CozaLoza 31 32 Coza
+//23 Coza Loza 26 Coza Woza 29 CozaLoza 31 32 Coza 
 public class CozaLozaWoza {
 
 	public static void main(String[] args) {
