@@ -12,40 +12,49 @@ package learn.basic.homework;
  */
 public class MinMax {
 
-    public static void main(String[] args) {
-        int[] random = {4,6,1,5,3,8,2,7,9,8,10};
-        MinMax mm = new MinMax();
-        mm.sort(random);
+	public static void main(String[] args) {
+		int[] random = { 10, 6, 1, 5, 3, 8, 2, 7, 9, 8, 4 };
+		MinMax mm = new MinMax();
+		mm.sort(random);
 
-    }
+	}
 
-    public void sort(int[] array) {
-        int temp = 0;
-        int max = 0;
-        int min = 0;
-        int temp2 = 0;
+	public void sort(int[] array) {
+		int temp = 0;
+		int max = 0;
+		int min = 0;
+		int temp2 = 0;
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] > max) {
+				// max = array[i];
 
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] > max) {
-                max = array[i];
+				temp2 = array[i];
+			}
+		}
 
-                temp2 = array[i];
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] > max) {
+				max = array[i];
 
-            } else {
-                if (array[i] < temp2) {
-                    min = array[i];
-                    temp2 = array[i];
-                    // System.out.println(temp2);
+				// temp2 = array[i];
 
-                }
-            }
+			} else {
+				if (array[i] < temp2) {
+					min = array[i];
+					temp2 = array[i];
+					System.out.println("min1-->" + temp2);
 
-        }
-         if (min ==0) {
-            min = array[0];
-            }
+				} else {
+					System.out.println("min2-->" + array[i]);
+				}
+			}
 
-        System.out.println("Maximum value is :" + max);
-        System.out.println("Minimum value is :" + min);
-    }
+		}
+		if (min == 0) {
+			min = array[0];
+		}
+
+		System.out.println("Maximum value is :" + max);
+		System.out.println("Minimum value is :" + min);
+	}
 }
