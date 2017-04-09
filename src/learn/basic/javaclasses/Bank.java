@@ -21,7 +21,7 @@ public class Bank {
 	 * @return
 	 */
 	// -----[0,..........]--------------[.1.........]-------------[..2.............]
-	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar) {
+	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money) {
 
 		String customerAccountNumber = "SNGURB-" + (customerNumber + 1);
 
@@ -32,6 +32,7 @@ public class Bank {
 		cs.setCustomerAddress(addes);
 		cs.setCustomerPAN(pan);
 		cs.setCustomerAdhar(adhar);
+		cs.setMoney(money);
 		customersArray[customerNumber] = cs;
 
 		/*
@@ -58,14 +59,13 @@ public class Bank {
 		for (int j = 0; j < customersArray.length; j++) {
 			Customer cust = customersArray[j];
 			if (cust.getCustomerAccno().equals(acno)) {
-			//	Customer cs = new Customer();
+
 				cust.setCustomerAccno(acno);
 				cust.setCustomerName(name);
 				cust.setCustomerDOB(dob);
 				cust.setCustomerAddress(addes);
 				cust.setCustomerPAN(pan);
 				cust.setCustomerAdhar(adhar);
-
 				return cust;
 
 			}
@@ -76,10 +76,14 @@ public class Bank {
 	// This method should return an array of customers whos accounts has been
 	// created
 	public Customer[] getAllCustomersInBank() {
+		Customer temp = new Customer();
 		Customer[] allcustomers = new Customer[customerNumber];
 		for (int i = 0; i < allcustomers.length; i++) {
 			if (customersArray[i] != null) {
-				allcustomers[i] = customersArray[i];
+				allcustomers[i] = customersArray[i]; // data must be handeled
+											// via object not
+					//allcustomers[i]=temp;						// directly by array
+											// copy or clone
 			}
 		}
 		return allcustomers;
@@ -97,10 +101,37 @@ public class Bank {
 	public void insuranceInBank() {
 	}
 
-	public void depoditMoney() {
+	/**
+	 * This method deposits specific account to the given Account
+	 * 
+	 * @param amount
+	 * @param accountNumber
+	 */
+
+	public Customer depositMoney(int amount, String accountNumber) {
+
+		for (int i = 0; i < customersArray.length; i++) {
+			Customer cust = customersArray[i];
+			if (cust.getCustomerAccno().equals(accountNumber)) {
+				int totalMoney = cust.getMoney() + amount;
+				cust.setMoney(totalMoney);
+				return cust;
+			}
+		}
+
+		return null;
 	}
 
-	public void withdrawMoney() {
+	public Customer withdrawMoney(int amount, String accountNumber) {
+		for (int i = 0; i < customersArray.length; i++) {
+			Customer cust = customersArray[i];
+			if (cust.getCustomerAccno().equals(accountNumber)) {
+				int totalMoney = cust.getMoney() - amount;
+				cust.setMoney(totalMoney);
+				return cust;
+			}
+		}
+		return null;
 	}
 
 	public Customer getAccountFromAccountNumber(String AccountNo1) {
@@ -119,16 +150,56 @@ public class Bank {
 		return customersArray;
 	}
 
-	public void printAll(Customer[] customers1) {
-		for (int i = 0; i < customers1.length; i++) {
-			System.out.println("Name:" + customers1[i].getCustomerName());
-			System.out.println("DOB:" + customers1[i].getCustomerDOB());
-			System.out.println("Address:" + customers1[i].getCustomerAddress());
-			System.out.println("Pan:" + customers1[i].getCustomerPAN());
-			System.out.println("Adhar:" + customers1[i].getCustomerAdhar());
-			System.out.println("AccountNo:" + customers1[i].getCustomerAccno());
+	public void printAll() {
+		for (int i = 0; i < customersArray.length; i++) {
+			Customer customer = customersArray[i];
+			if(customer!=null){
+			System.out.println("Name:" + customersArray[i].getCustomerName());
+			System.out.println("DOB:" + customersArray[i].getCustomerDOB());
+			System.out.println("Address:" + customersArray[i].getCustomerAddress());
+			System.out.println("Pan:" + customersArray[i].getCustomerPAN());
+			System.out.println("Adhar:" + customersArray[i].getCustomerAdhar());
+			System.out.println("AccountNo:" + customersArray[i].getCustomerAccno());
+			System.out.println("Amount in Account: " + customersArray[i].getMoney());
 			System.out.println(" ");
+			}
 		}
+
+	}
+
+	public void printOneAcc(Customer oneCustomer) {
+		System.out.println(" ");
+		System.out.println("One Customer Detail: ");
+		System.out.println(oneCustomer.getCustomerAccno());
+		System.out.println(oneCustomer.getCustomerName());
+		System.out.println(oneCustomer.getCustomerDOB()); // create method in
+															// bank
+															// to print updated
+															// customer
+		System.out.println(oneCustomer.getCustomerAddress());
+		System.out.println(oneCustomer.getCustomerPAN());
+		System.out.println(oneCustomer.getCustomerAdhar());
+		System.out.println(" ");
+
+	}
+
+	public Customer[] deleteAccount(String delCust) {
+		System.out.println("Customer Number: "+ customerNumber);
+		Customer[] newArray = new Customer[customerNumber - 1];
+		int counter =0;
+		for (int i = 0; i < customerNumber; i++) {
+			//System.out.println("Customer Number: "+ i);
+			//System.out.println("Customer Number: "+ i+" Account number: "+ customersArray[i].getCustomerAccno());
+			Customer customer = customersArray[i];
+			
+			if (customer != null && !customersArray[i].getCustomerAccno().equals(delCust)) {
+				newArray[counter] = customersArray[i];
+				counter++;
+			}
+		}
+		customerNumber = customerNumber -1;
+		this.customersArray = newArray;
+		return newArray;
 
 	}
 

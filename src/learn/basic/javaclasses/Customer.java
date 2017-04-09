@@ -7,6 +7,7 @@ public class Customer {
 	String customerAddress;
 	String customerPAN;
 	String customerAdhar;
+	int money;
 	
 
 	public String getCustomerName() {
@@ -55,6 +56,14 @@ public class Customer {
 
 	public void setCustomerAdhar(String customerAdhar) {
 		this.customerAdhar = customerAdhar;
+	}
+
+	public int getMoney() {
+		return money;
+	}
+
+	public void setMoney(int money) {
+		this.money = money;
 	}
 
 }
