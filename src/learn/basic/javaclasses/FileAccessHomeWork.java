@@ -14,12 +14,15 @@ import java.io.InputStream;
 
 public class FileAccessHomeWork {
 	int h;
+	int counter = 0;
 	int result = 0;
 	int[] array;
+	static int[] random = new int[10];
 
 	public static void main(String[] args) throws IOException {
 		FileAccessHomeWork fn = new FileAccessHomeWork();
 		fn.readFile("temp1.txt");
+		fn.sort(random);
 	}
 
 	/*
@@ -48,35 +51,64 @@ public class FileAccessHomeWork {
 		} else {
 			System.out.println("File not Present");
 		}
-
 		InputStream in = new FileInputStream(fileName);
-
 		InputStreamReader isr = new InputStreamReader(in);
-
 		BufferedReader bfr = new BufferedReader(isr);
-		
-		int counter =0;
-		while (counter <1000) {
-			counter ++;
+
+		int i = 0;
+		while (counter < 1000) {
+
 			String data = bfr.readLine();
 			if (data == null) {
-			break;	
+				break;
 			}
-			// String number = "10";
-			// for (h = 0; h < 10; h++) {
 			result = (Integer.parseInt(data));
-			//			
-			System.out.println(result);
-			// System.out.println("File Data: " + data);
 
-			// String data1=bfr.readLine();
-			// System.out.println("File Data: "+data1);
-			// bfr.close();
-			// }
+			random[i] = result;
+			i++;
+			counter++;
+		}
+		for (int j = 0; j < counter; j++) {
+			System.out.println(random[j]);
 		}
 		bfr.close();
 	}
 
-	
-	
+	public void sort(int[] array) {
+		int temp = 0;
+		int max = 0;
+		int min = 0;
+		int temp2 = 0;
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] > max) {
+				// max = array[i];
+
+				temp2 = array[i];
+
+			}
+		}
+		for (int i = 0; i < counter; i++) {
+			if (array[i] > max) {
+				max = array[i];
+
+				// temp2 = array[i];
+
+			} else {
+				if (array[i] < temp2) {
+					min = array[i];
+					temp2 = array[i];
+					// System.out.println(temp2);
+
+				}
+			}
+
+		}
+		if (min == 0) {
+			min = array[0];
+		}
+
+		System.out.println("Maximum value is :" + max);
+		System.out.println("Minimum value is :" + min);
+	}
+
 }

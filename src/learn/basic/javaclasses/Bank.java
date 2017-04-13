@@ -1,5 +1,10 @@
 package learn.basic.javaclasses;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 public class Bank {
 	Customer[] customersArray = new Customer[15];
 	int customerNumber = 0;
@@ -81,9 +86,9 @@ public class Bank {
 		for (int i = 0; i < allcustomers.length; i++) {
 			if (customersArray[i] != null) {
 				allcustomers[i] = customersArray[i]; // data must be handeled
-											// via object not
-					//allcustomers[i]=temp;						// directly by array
-											// copy or clone
+				// via object not
+				// allcustomers[i]=temp; // directly by array
+				// copy or clone
 			}
 		}
 		return allcustomers;
@@ -153,54 +158,92 @@ public class Bank {
 	public void printAll() {
 		for (int i = 0; i < customersArray.length; i++) {
 			Customer customer = customersArray[i];
-			if(customer!=null){
-			System.out.println("Name:" + customersArray[i].getCustomerName());
-			System.out.println("DOB:" + customersArray[i].getCustomerDOB());
-			System.out.println("Address:" + customersArray[i].getCustomerAddress());
-			System.out.println("Pan:" + customersArray[i].getCustomerPAN());
-			System.out.println("Adhar:" + customersArray[i].getCustomerAdhar());
-			System.out.println("AccountNo:" + customersArray[i].getCustomerAccno());
-			System.out.println("Amount in Account: " + customersArray[i].getMoney());
-			System.out.println(" ");
+			if (customer != null) {
+				System.out.println("Name:" + customersArray[i].getCustomerName());
+				System.out.println("DOB:" + customersArray[i].getCustomerDOB());
+				System.out.println("Address:" + customersArray[i].getCustomerAddress());
+				System.out.println("Pan:" + customersArray[i].getCustomerPAN());
+				System.out.println("Adhar:" + customersArray[i].getCustomerAdhar());
+				System.out.println("AccountNo:" + customersArray[i].getCustomerAccno());
+				System.out.println("Amount in Account: " + customersArray[i].getMoney());
+				System.out.println(" ");
 			}
 		}
 
 	}
 
-	public void printOneAcc(Customer oneCustomer) {
-		System.out.println(" ");
-		System.out.println("One Customer Detail: ");
-		System.out.println(oneCustomer.getCustomerAccno());
-		System.out.println(oneCustomer.getCustomerName());
-		System.out.println(oneCustomer.getCustomerDOB()); // create method in
+	public Customer printOneAcc(String oneCustomer) {// in argument it must be
+														// string
+		for (int j = 0; j < customersArray.length; j++) {
+			Customer cust = customersArray[j];
+			if (cust.getCustomerAccno().equals(oneCustomer)) {
+				System.out.println(" ");
+				System.out.println("One Customer Detail: ");
+				System.out.println(cust.getCustomerAccno());
+				System.out.println(cust.getCustomerName());
+				System.out.println(cust.getCustomerDOB()); // create method in
 															// bank
 															// to print updated
 															// customer
-		System.out.println(oneCustomer.getCustomerAddress());
-		System.out.println(oneCustomer.getCustomerPAN());
-		System.out.println(oneCustomer.getCustomerAdhar());
-		System.out.println(" ");
+				System.out.println(cust.getCustomerAddress());
+				System.out.println(cust.getCustomerPAN());
+				System.out.println(cust.getCustomerAdhar());
+				System.out.println(cust.getMoney());
+				return cust;
+
+			}
+		}
+
+		return null;
 
 	}
 
 	public Customer[] deleteAccount(String delCust) {
-		System.out.println("Customer Number: "+ customerNumber);
+		System.out.println("Customer Number: " + customerNumber);
 		Customer[] newArray = new Customer[customerNumber - 1];
-		int counter =0;
+		int counter = 0;
 		for (int i = 0; i < customerNumber; i++) {
-			//System.out.println("Customer Number: "+ i);
-			//System.out.println("Customer Number: "+ i+" Account number: "+ customersArray[i].getCustomerAccno());
+			// System.out.println("Customer Number: "+ i);
+			// System.out.println("Customer Number: "+ i+" Account number: "+
+			// customersArray[i].getCustomerAccno());
 			Customer customer = customersArray[i];
-			
+
 			if (customer != null && !customersArray[i].getCustomerAccno().equals(delCust)) {
 				newArray[counter] = customersArray[i];
 				counter++;
 			}
 		}
-		customerNumber = customerNumber -1;
+		customerNumber = customerNumber - 1;
 		this.customersArray = newArray;
 		return newArray;
 
 	}
 
+	// we are going to write customer data into file with this method
+	public Customer writeFile(String file) throws IOException {
+		File FileRefrance = new File(file);
+		if (FileRefrance.exists()) {
+			System.out.println("File exists");
+
+		} else {
+			System.out.println("File does not exist new one created");
+		}
+
+		OutputStream outstream = new FileOutputStream(file);
+		for (int i = 0; i < customersArray.length; i++) {
+			Customer customer = customersArray[i];
+
+			if (customer != null) {
+
+				byte[] data = customer.getCustomerName().getBytes();
+				// byte[] data = customer.getCustomerAccno().getBytes();
+
+				outstream.write(data);
+
+			}
+			outstream.close();
+		}
+
+		return null;
+	}
 }

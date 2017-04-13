@@ -1,10 +1,12 @@
 package learn.basic.javaclasses;
 
+import java.io.IOException;
+
 public class MainDriverClass {
 
 	// Homework: try to remove location argument and set customer correctly
 	// return correct account number
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		Bank bk = new Bank();
 		String AccountNo = bk.createAccountInBank("omk", "14-9-1984", "abc pune", "PUKT1234", "12345678", 500); // "SNGURB-1"
@@ -28,10 +30,14 @@ public class MainDriverClass {
 		bk.depositMoney(1000, "SNGURB-2");
 		bk.withdrawMoney(3000, "SNGURB-2");
 		bk.printAll();
+		// data tobe write in file
+		//bk.writeFile("temp2.txt");
+		//Customer customer = bk.getAccountFromAccountNumber("SNGURB-2");
 
-		Customer customer = bk.getAccountFromAccountNumber("SNGURB-2");
-
-		bk.printOneAcc(customer);
+		bk.printOneAcc("SNGURB-2");
+		bk.printOneAcc("SNGURB-2");
+		bk.printOneAcc("SNGURB-2");
+		bk.printOneAcc("SNGURB-2");
 		// System.out.println(customer.getCustomerName());
 
 		// After executing this method, I should receive the customer object
@@ -39,16 +45,22 @@ public class MainDriverClass {
 		// If I execute 'getAccountFromAccountNumber' method then I should
 		// receive the correct data
 		// update Account
+
+		// 1 Inheritance
+		// 2 Encapsulation
+		// 3 Polymorphism - overloading / overriding (tostring)
+		// 4 Abstraction
 		Customer customer2 = bk.updateAccountFromAccountNo("SNGURB-1", "hari", "12-12-1996", "nashik", "PAN1234",
 				"ADHAR1234");
-		bk.printOneAcc(customer2);
+		System.out.println(customer2);
+		bk.printOneAcc("SNGURB-3");
 
 		bk.deleteAccount("SNGURB-1");
 		System.out.println("Account deleted");
 		bk.deleteAccount("SNGURB-3");
 		System.out.println("Account deleted");
 		bk.deleteAccount("SNGURB-2");
-		
+
 		bk.printAll();
 		// Once the account delete method is executed, the account should be
 		// deleted from the bank
