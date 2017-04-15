@@ -15,7 +15,7 @@ public class FileHandle1 {
 
 		FileHandle1 fh = new FileHandle1();
 
-		String filename = "temp1.txt";
+		String filename = "temp.txt";
 		fh.read(filename);
 		fh.writeFile("temp1.txt", "this is new data in file");
 	}
