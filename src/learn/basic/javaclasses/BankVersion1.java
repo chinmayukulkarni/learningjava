@@ -2,7 +2,6 @@ package learn.basic.javaclasses;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -248,12 +247,17 @@ public class BankVersion1 implements BankInterface {
 		while ((line = in.readLine()) != null) {
 			String[] temp = new String[10];
 			System.out.println(line);
+			// In this method you are trying to read Customer information and load it into customersArray. 
+			// So Customers array is empty. You even dont know how many customers are there.
+			// So you cannot use following line. It will give you null 'cst' object. 
 			Customer cst = customersArray[counter];
 			StringTokenizer st = new StringTokenizer(line, "|");
 			while (st.hasMoreTokens()) {
+				
 				temp[i] = st.nextToken();
 				i++;
 			}
+			// You need to create new customer object for every loop and add the data in it directly. you do not need to have 'temp' variable
 			cst.setCustomerName(temp[0]);
 			cst.setCustomerAccno(temp[1]);
 			cst.setCustomerDOB(temp[2]);
@@ -264,6 +268,39 @@ public class BankVersion1 implements BankInterface {
 		}
 
 		// temp.setMoney(st.nextToken());
+		in.close();
+	}
+	
+	
+	/**
+	 * This is another method I am writing for you.
+	 * Please cross check what changes I have done 
+	 */
+	public void readFile_Version1() throws IOException {
+		int customerCounter=0;
+		FileReader myReader = new FileReader("temp2.txt");
+		BufferedReader in = new BufferedReader(myReader);
+		
+		String line;
+		while ((line = in.readLine()) != null) {
+			System.out.println(line);
+
+			Customer cust = new Customer();
+			StringTokenizer st = new StringTokenizer(line, "|");
+			while (st.hasMoreTokens()) {
+				
+				cust.setCustomerName(st.nextToken());
+				cust.setCustomerAccno(st.nextToken());
+				cust.setCustomerDOB(st.nextToken());
+				cust.setCustomerAddress(st.nextToken());
+				cust.setCustomerPAN(st.nextToken());
+				cust.setCustomerAdhar(st.nextToken());
+				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
+			}
+			customersArray[customerCounter] = cust;
+			customerCounter++;
+		}
+
 		in.close();
 	}
 }

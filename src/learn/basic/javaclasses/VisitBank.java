@@ -39,7 +39,8 @@ public class VisitBank {
 		// bk.printAll();
 		// // data tobe write in file
 	//	bk.writeFile();
-		bk.readFile();
+		bk.readFile_Version1();
+		bk.printAll();
 		// Customer customer = bk.getAccountFromAccountNumber("SNGURB-2");
 
 		// bk.printOneAcc("SNGURB-2");
