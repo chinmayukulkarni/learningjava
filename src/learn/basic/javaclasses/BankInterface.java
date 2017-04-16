@@ -26,5 +26,7 @@ public interface BankInterface {
 
 	public void readFile() throws IOException;
 	
+	public void readFile_Version1() throws IOException;
+	
 
 }
