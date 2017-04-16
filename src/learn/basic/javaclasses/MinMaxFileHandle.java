@@ -3,26 +3,21 @@ package learn.basic.javaclasses;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-
-import javax.imageio.stream.ImageOutputStreamImpl;
-
 import java.io.InputStream;
 
-public class FileAccessHomeWork {
-	int h;
+public class MinMaxFileHandle {
+
 	int counter = 0;
 	int result = 0;
 	int[] array;
 	static int[] random = new int[10];
 
 	public static void main(String[] args) throws IOException {
-		FileAccessHomeWork fn = new FileAccessHomeWork();
+		MinMaxFileHandle fn = new MinMaxFileHandle();
 		fn.readFile("temp1.txt");
-		fn.sort(random);
+		fn.minMax(random);
 	}
 
 	/*
@@ -74,34 +69,25 @@ public class FileAccessHomeWork {
 		bfr.close();
 	}
 
-	public void sort(int[] array) {
-		int temp = 0;
+	public void minMax(int[] array) {
+
 		int max = 0;
 		int min = 0;
 		int temp2 = 0;
 		for (int i = 0; i < array.length; i++) {
 			if (array[i] > max) {
-				// max = array[i];
-
 				temp2 = array[i];
-
 			}
 		}
 		for (int i = 0; i < counter; i++) {
 			if (array[i] > max) {
 				max = array[i];
-
-				// temp2 = array[i];
-
 			} else {
 				if (array[i] < temp2) {
 					min = array[i];
 					temp2 = array[i];
-					// System.out.println(temp2);
-
 				}
 			}
-
 		}
 		if (min == 0) {
 			min = array[0];

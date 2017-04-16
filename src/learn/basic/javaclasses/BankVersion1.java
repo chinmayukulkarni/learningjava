@@ -1,13 +1,25 @@
 package learn.basic.javaclasses;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.StringTokenizer;
 
-public class Bank {
+public class BankVersion1 implements BankInterface {
 	Customer[] customersArray = new Customer[15];
 	int customerNumber = 0;
+
+	// This is default constructor
+	public BankVersion1() {
+		// This is the place from where you will execute read file method
+		// This read file method should populate customersArray
+
+		super();
+	}
 
 	/**
 	 * This method accepts the details of the user and creates the account for
@@ -40,21 +52,8 @@ public class Bank {
 		cs.setMoney(money);
 		customersArray[customerNumber] = cs;
 
-		/*
-		 * for (Customer c : customer) {
-		 * System.out.println(c.getCustomerName());
-		 * System.out.println(c.getCustomerAccno());
-		 * System.out.println(c.getCustomerDOB());
-		 * System.out.println(c.getCustomerAddress());
-		 * System.out.println(c.getCustomerPAN());
-		 * System.out.println(c.getCustomerAdhar()); }
-		 */
-		// Right now you are hardcoding the account number.
-		// Ideally, you should implement a logic such that
-		// your code will generate next account number.
-		// "SNGUB-{id}" for e.g. "SNGUB-10"
-
-		customerNumber++;
+		customerNumber++; // total number of customer in bank represented by
+							// customerNumber
 
 		return customerAccountNumber;
 	}
@@ -62,9 +61,10 @@ public class Bank {
 	public Customer updateAccountFromAccountNo(String acno, String name, String addes, String dob, String pan,
 			String adhar) {
 		for (int j = 0; j < customersArray.length; j++) {
-			Customer cust = customersArray[j];
-			if (cust.getCustomerAccno().equals(acno)) {
 
+			Customer cust = customersArray[j];
+
+			if (cust.getCustomerAccno().equals(acno)) {
 				cust.setCustomerAccno(acno);
 				cust.setCustomerName(name);
 				cust.setCustomerDOB(dob);
@@ -123,7 +123,6 @@ public class Bank {
 				return cust;
 			}
 		}
-
 		return null;
 	}
 
@@ -172,30 +171,25 @@ public class Bank {
 
 	}
 
-	public Customer printOneAcc(String oneCustomer) {// in argument it must be
-														// string
-		for (int j = 0; j < customersArray.length; j++) {
+	public void printOneAcc(String oneCustomer) {
+
+		for (int j = 0; j < customerNumber; j++) {
 			Customer cust = customersArray[j];
 			if (cust.getCustomerAccno().equals(oneCustomer)) {
 				System.out.println(" ");
 				System.out.println("One Customer Detail: ");
 				System.out.println(cust.getCustomerAccno());
 				System.out.println(cust.getCustomerName());
-				System.out.println(cust.getCustomerDOB()); // create method in
-															// bank
-															// to print updated
-															// customer
+				System.out.println(cust.getCustomerDOB());
 				System.out.println(cust.getCustomerAddress());
 				System.out.println(cust.getCustomerPAN());
 				System.out.println(cust.getCustomerAdhar());
 				System.out.println(cust.getMoney());
-				return cust;
-
+				// return cust;
 			}
 		}
 
-		return null;
-
+		// return null;
 	}
 
 	public Customer[] deleteAccount(String delCust) {
@@ -203,9 +197,7 @@ public class Bank {
 		Customer[] newArray = new Customer[customerNumber - 1];
 		int counter = 0;
 		for (int i = 0; i < customerNumber; i++) {
-			// System.out.println("Customer Number: "+ i);
-			// System.out.println("Customer Number: "+ i+" Account number: "+
-			// customersArray[i].getCustomerAccno());
+
 			Customer customer = customersArray[i];
 
 			if (customer != null && !customersArray[i].getCustomerAccno().equals(delCust)) {
@@ -216,11 +208,11 @@ public class Bank {
 		customerNumber = customerNumber - 1;
 		this.customersArray = newArray;
 		return newArray;
-
 	}
 
 	// we are going to write customer data into file with this method
-	public Customer writeFile(String file) throws IOException {
+	public void writeFile() throws IOException {
+		String file = "temp2.txt";
 		File FileRefrance = new File(file);
 		if (FileRefrance.exists()) {
 			System.out.println("File exists");
@@ -230,20 +222,48 @@ public class Bank {
 		}
 
 		OutputStream outstream = new FileOutputStream(file);
-		for (int i = 0; i < customersArray.length; i++) {
+		for (int i = 0; i < customerNumber; i++) {
 			Customer customer = customersArray[i];
 
-			if (customer != null) {
+			String customerInStringFormat = customer.toString();
+			outstream.write(customerInStringFormat.getBytes());
+			outstream.write("\n".getBytes());
 
-				byte[] data = customer.getCustomerName().getBytes();
-				// byte[] data = customer.getCustomerAccno().getBytes();
-
-				outstream.write(data);
-
-			}
-			outstream.close();
 		}
 
-		return null;
+		outstream.close();
+
+	}
+
+	public void readFile() throws IOException {
+		int i = 0;
+		int counter = 0;
+
+		FileReader myReader = new FileReader("temp2.txt");
+		BufferedReader in = new BufferedReader(myReader);
+		// String fileContent1 = in.readLine();
+		// "String tokenizer" create customersArray
+
+		String line;
+		while ((line = in.readLine()) != null) {
+			String[] temp = new String[10];
+			System.out.println(line);
+			Customer cst = customersArray[counter];
+			StringTokenizer st = new StringTokenizer(line, "|");
+			while (st.hasMoreTokens()) {
+				temp[i] = st.nextToken();
+				i++;
+			}
+			cst.setCustomerName(temp[0]);
+			cst.setCustomerAccno(temp[1]);
+			cst.setCustomerDOB(temp[2]);
+			cst.setCustomerAddress(temp[3]);
+			cst.setCustomerPAN(temp[4]);
+			cst.setCustomerAdhar(temp[5]);
+			counter++;
+		}
+
+		// temp.setMoney(st.nextToken());
+		in.close();
 	}
 }

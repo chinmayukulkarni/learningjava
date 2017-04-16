@@ -8,7 +8,6 @@ public class Customer {
 	String customerPAN;
 	String customerAdhar;
 	int money;
-	
 
 	public String getCustomerName() {
 		return customerName;
@@ -68,9 +67,8 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [customer Name=" + customerName + ", customer AccountNumber =" + customerAccno + ", customer DOB="
-				+ customerDOB + ", customer Address=" + customerAddress + ", customer PAN=" + customerPAN
-				+ ", customer Adhar=" + customerAdhar + ", Money=" + money + "]";
+		return customerName + "|" + customerAccno + "|" + customerDOB + "|" + customerAddress + "|" + customerPAN + "|"
+				+ customerAdhar + "|" + money;
 	}
 
 }
