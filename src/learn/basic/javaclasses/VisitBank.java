@@ -28,59 +28,19 @@ public class VisitBank {
 			switch (choice) {
 
 			case 1:// create account
-				System.out.println("");
-				System.out.print("Enter Name of AccountHolder:");
-				String name = sc.nextLine();
-
-				System.out.print("Enter Date of Birth (dd-mm-yyyy):");
-				String dob = sc.nextLine();
-
-				System.out.print("Enter Address of Account Holder:");
-				String address = sc.nextLine();
-				System.out.print("Enter PAN of Account Holder:");
-				String pan = sc.nextLine();
-
-				System.out.print("Enter AdharNumber of AccountHolder:");
-				String adhar = sc.nextLine();
-
-				System.out.print("Enter Money for opening account:");
-				int money = (Integer.parseInt(sc.nextLine().trim()));
-
-				String AccountNo = bk.createAccountInBank(name, dob, address, pan, adhar, money); // "SNGURB-1"
-				System.out.println("Account number is:" + AccountNo);
+				bk.createHaandle();
 				break;
 
 			case 2:// update account
-				System.out.println("");
-				System.out.print("Enter Account Number in Format->SNGURB-1:");
-				String acno = sc.nextLine();
-				System.out.print("Enter Name of AccountHolder:");
-				name = sc.nextLine();
-				System.out.print("Enter Date of Birth (dd-mm-yyyy):");
-				dob = sc.nextLine();
-				System.out.print("Enter Address of Account Holder:");
-				address = sc.nextLine();
-				System.out.print("Enter PAN of 1" + "Account Holder:");
-				pan = sc.nextLine();
-				System.out.print("Enter AdharNumber of AccountHolder:");
-				adhar = sc.nextLine();
-				// System.out.println("Enter Money for opening account:");
-				// money = (Integer.parseInt(sc.nextLine().trim()));
-				Customer customer2 = bk.updateAccountFromAccountNo(acno, name, dob, address, pan, adhar);
-				System.out.print(customer2);
+				bk.updateHandle();
 				break;
 
 			case 3:// Deleting account
-				System.out.print("Enter Account Number to be Deleted in Format->SNGURB-1:");
-				acno = sc.nextLine();
-				bk.deleteAccount(acno);
-				System.out.println("Account deleted");
+				bk.deleteHandle();
 				break;
 
 			case 4:// Print one account
-				System.out.print("Enter Account Number to be Printed in Format->SNGURB-1:");
-				acno = sc.nextLine();
-				bk.printOneAcc(acno);
+				bk.printOneHandle();
 				break;
 
 			case 5:// Print all accounts
@@ -89,19 +49,11 @@ public class VisitBank {
 				break;
 
 			case 6:// Deposit Money
-				System.out.print("Enter Account Number In Which Amount To be Deposited:");
-				acno = sc.nextLine();
-				System.out.print("Enter Amount to be Deposited in Account");
-				money = (Integer.parseInt(sc.nextLine().trim()));
-				bk.depositMoney(money, acno);
+				bk.depositHandle();
 				break;
 
 			case 7:// Withdraw money
-				System.out.println("Enter Account Number In Which Amount To be Withdrawl:");
-				acno = sc.nextLine();
-				System.out.println("Enter Amount to be Deposited in Account");
-				money = (Integer.parseInt(sc.nextLine().trim()));
-				bk.withdrawMoney(money, acno);
+				bk.withdrawHandle();
 				break;
 
 			default:

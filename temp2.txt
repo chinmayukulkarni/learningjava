@@ -1,4 +1,2 @@
-|omk|SNGURB-1|14-9-1984|abc pune|PUKT1234|12345678|500 
-|Chinmay|SNGURB-2|4-10-1985|shanivar pune|PUKT2134|98765432|500 
-|bbc|SNGURB-3|5-10-1986|somvar pune|PUKT3333|99876543|500 
-|xyz|SNGURB-4|6-10-1986| pune|PUKT3344|1234567889|500
+omkar|SNGURB-1|14-09-1984|boston america|pan12353|adhar12353|1000
+chinmay|SNGURB-2|03-09-1990|vishrambaug sangli|pan1234|adhar12345|500

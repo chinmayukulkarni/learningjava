@@ -6,11 +6,12 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class BankVersion1 implements BankInterface {
-	Customer[] customersArray = new Customer[15];
 	int customerNumber = 0;
+	Customer[] customersArray = new Customer[15];
 
 	// This is default constructor
 	public BankVersion1() {
@@ -37,6 +38,9 @@ public class BankVersion1 implements BankInterface {
 	 * @return
 	 */
 	// -----[0,..........]--------------[.1.........]-------------[..2.............]
+	// BankVersion1 bv = new BankVersion1();
+	Scanner sc = new Scanner(System.in);
+
 	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money) {
 
 		String customerAccountNumber = "SNGURB-" + (customerNumber + 1);
@@ -297,8 +301,81 @@ public class BankVersion1 implements BankInterface {
 			}
 			customersArray[customerCounter] = cust;
 			customerCounter++;
+			customerNumber++;
 		}
 
 		in.close();
+	}
+
+	public void createHaandle() {
+		System.out.println("");
+		System.out.print("Enter Name of AccountHolder:");
+		String name = sc.nextLine();
+
+		System.out.print("Enter Date of Birth (dd-mm-yyyy):");
+		String dob = sc.nextLine();
+
+		System.out.print("Enter Address of Account Holder:");
+		String address = sc.nextLine();
+		System.out.print("Enter PAN of Account Holder:");
+		String pan = sc.nextLine();
+
+		System.out.print("Enter AdharNumber of AccountHolder:");
+		String adhar = sc.nextLine();
+
+		System.out.print("Enter Money for opening account:");
+		int money = (Integer.parseInt(sc.nextLine().trim()));
+
+		String AccountNo = createAccountInBank(name, dob, address, pan, adhar, money); // "SNGURB-1"
+		System.out.println("Account number is:" + AccountNo);
+	}
+
+	public void updateHandle() {
+		System.out.println("");
+		System.out.print("Enter Account Number in Format->SNGURB-1:");
+		String acno = sc.nextLine();
+		System.out.print("Enter Name of AccountHolder:");
+		String name = sc.nextLine();
+		System.out.print("Enter Date of Birth (dd-mm-yyyy):");
+		String dob = sc.nextLine();
+		System.out.print("Enter Address of Account Holder:");
+		String address = sc.nextLine();
+		System.out.print("Enter PAN of 1" + "Account Holder:");
+		String pan = sc.nextLine();
+		System.out.print("Enter AdharNumber of AccountHolder:");
+		String adhar = sc.nextLine();
+		// System.out.println("Enter Money for opening account:");
+		// money = (Integer.parseInt(sc.nextLine().trim()));
+		Customer customer2 = updateAccountFromAccountNo(acno, name, dob, address, pan, adhar);
+		System.out.print(customer2);
+	}
+
+	public void deleteHandle() {
+		System.out.print("Enter Account Number to be Deleted in Format->SNGURB-1:");
+		String acno = sc.nextLine();
+		deleteAccount(acno);
+		System.out.println("Account deleted");
+	}
+
+	public void printOneHandle() {
+		System.out.print("Enter Account Number to be Printed in Format->SNGURB-1:");
+		String acno = sc.nextLine();
+		printOneAcc(acno);
+	}
+
+	public void depositHandle() {
+		System.out.print("Enter Account Number In Which Amount To be Deposited:");
+		String acno = sc.nextLine();
+		System.out.print("Enter Amount to be Deposited in Account");
+		int money = (Integer.parseInt(sc.nextLine().trim()));
+		depositMoney(money, acno);
+	}
+
+	public void withdrawHandle() {
+		System.out.println("Enter Account Number In Which Amount To be Withdrawl:");
+		String acno = sc.nextLine();
+		System.out.println("Enter Amount to be Deposited in Account");
+		int money = (Integer.parseInt(sc.nextLine().trim()));
+		withdrawMoney(money, acno);
 	}
 }

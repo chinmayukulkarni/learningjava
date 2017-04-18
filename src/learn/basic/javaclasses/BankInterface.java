@@ -25,8 +25,19 @@ public interface BankInterface {
 	public void printOneAcc(String oneCustomer);
 
 	public void readFile() throws IOException;
-	
+
 	public void readFile_Version1() throws IOException;
-	
+
+	public void createHaandle();
+
+	public void updateHandle();
+
+	public void deleteHandle();
+
+	public void printOneHandle();
+
+	public void depositHandle();
+
+	public void withdrawHandle();
 
 }
