@@ -1,52 +1,122 @@
 package learn.basic.javaclasses;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class VisitBank {
 
 	// Homework: try to remove location argument and set customer correctly
 	// return correct account number
 	public static void main(String[] args) throws IOException {
-
 		BankInterface bk = new BankVersion1();
-		// int choice = 0;
-		// switch (choice) {
-		// case 1:// create account
-//		String AccountNo = bk.createAccountInBank("omk", "14-9-1984", "abc pune", "PUKT1234", "12345678", 500); // "SNGURB-1"
-//		System.out.println("Account number is:" + AccountNo);
-//		String AccountNo1 = bk.createAccountInBank("abc", "4-10-1985", "shanivar pune", "PUKT2134", "98765432", 500);
-//		System.out.println("Account number is:" + AccountNo1);
-//		String AccountNo2 = bk.createAccountInBank("bbc", "5-10-1986", "somvar pune", "PUKT3333", "99876543", 500);
-//		System.out.println("Account number is:" + AccountNo2);
-//		String AccountNo3 = bk.createAccountInBank("xyz", "6-10-1986", " pune", "PUKT3344", "1234567889", 500);
-//		System.out.println("Account number is:" + AccountNo3);
+		bk.readFile_Version1();
+		Scanner sc = new Scanner(System.in);
 
-		// case 2:
-		// }
+		int ch = 0;
+		int choice = 0;
+		do {
+
+			System.out.println("Which operation do you want to perform? ");
+			System.out.println("Select 1 for creating account");
+			System.out.println("Select 2 for updating account");
+			System.out.println("Select 3 for deleting account");
+			System.out.println("Select 4 for Print one account");
+			System.out.println("Select 5 for Print All Accounts");
+			System.out.println("Select 6 for Deposit Money");
+			System.out.println("Select 7 for WithDraw Money");
+			choice = sc.nextInt();
+			switch (choice) {
+
+			case 1:// create account
+				System.out.println("");
+				System.out.print("Enter Name of AccountHolder:");
+				String name = sc.nextLine();
+
+				System.out.print("Enter Date of Birth (dd-mm-yyyy):");
+				String dob = sc.nextLine();
+
+				System.out.print("Enter Address of Account Holder:");
+				String address = sc.nextLine();
+				System.out.print("Enter PAN of Account Holder:");
+				String pan = sc.nextLine();
+
+				System.out.print("Enter AdharNumber of AccountHolder:");
+				String adhar = sc.nextLine();
+
+				System.out.print("Enter Money for opening account:");
+				int money = (Integer.parseInt(sc.nextLine().trim()));
+
+				String AccountNo = bk.createAccountInBank(name, dob, address, pan, adhar, money); // "SNGURB-1"
+				System.out.println("Account number is:" + AccountNo);
+				break;
+
+			case 2:// update account
+				System.out.println("");
+				System.out.print("Enter Account Number in Format->SNGURB-1:");
+				String acno = sc.nextLine();
+				System.out.print("Enter Name of AccountHolder:");
+				name = sc.nextLine();
+				System.out.print("Enter Date of Birth (dd-mm-yyyy):");
+				dob = sc.nextLine();
+				System.out.print("Enter Address of Account Holder:");
+				address = sc.nextLine();
+				System.out.print("Enter PAN of 1" + "Account Holder:");
+				pan = sc.nextLine();
+				System.out.print("Enter AdharNumber of AccountHolder:");
+				adhar = sc.nextLine();
+				// System.out.println("Enter Money for opening account:");
+				// money = (Integer.parseInt(sc.nextLine().trim()));
+				Customer customer2 = bk.updateAccountFromAccountNo(acno, name, dob, address, pan, adhar);
+				System.out.print(customer2);
+				break;
+
+			case 3:// Deleting account
+				System.out.print("Enter Account Number to be Deleted in Format->SNGURB-1:");
+				acno = sc.nextLine();
+				bk.deleteAccount(acno);
+				System.out.println("Account deleted");
+				break;
+
+			case 4:// Print one account
+				System.out.print("Enter Account Number to be Printed in Format->SNGURB-1:");
+				acno = sc.nextLine();
+				bk.printOneAcc(acno);
+				break;
+
+			case 5:// Print all accounts
+					// Customer[] allCustomers = bk.getAllCustomersInBank();
+				bk.printAll();
+				break;
+
+			case 6:// Deposit Money
+				System.out.print("Enter Account Number In Which Amount To be Deposited:");
+				acno = sc.nextLine();
+				System.out.print("Enter Amount to be Deposited in Account");
+				money = (Integer.parseInt(sc.nextLine().trim()));
+				bk.depositMoney(money, acno);
+				break;
+
+			case 7:// Withdraw money
+				System.out.println("Enter Account Number In Which Amount To be Withdrawl:");
+				acno = sc.nextLine();
+				System.out.println("Enter Amount to be Deposited in Account");
+				money = (Integer.parseInt(sc.nextLine().trim()));
+				bk.withdrawMoney(money, acno);
+				break;
+
+			default:
+				System.out.println("Enter correct option from menu");
+			}
+			bk.writeFile();
+			System.out.print("Do you want to continue?(0/1)(yes/no)");
+			ch = sc.nextInt();
+		} while (ch == 0);
+
+		sc.close();
 		// Customer firstCustomer = bk.getAccountFromAccountNumber("SNGURB-1");
 
-		Customer[] allCustomers = bk.getAllCustomersInBank();
-
-		// Print all customers in Bank
-		bk.printAll();
-
-		// deposit money in account
-		// bk.depositMoney(1000, "SNGURB-2");
-		// bk.depositMoney(1000, "SNGURB-2");
-		// bk.depositMoney(1000, "SNGURB-2");
-		// bk.depositMoney(1000, "SNGURB-2");
-		// bk.withdrawMoney(3000, "SNGURB-2");
-		// bk.printAll();
-		// // data tobe write in file
-	//	bk.writeFile();
-		bk.readFile_Version1();
-		bk.printAll();
 		// Customer customer = bk.getAccountFromAccountNumber("SNGURB-2");
 
-		// bk.printOneAcc("SNGURB-2");
-		// bk.printOneAcc("SNGURB-2");
-		// bk.printOneAcc("SNGURB-2");
-		// bk.printOneAcc("SNGURB-2");
 		// System.out.println(customer.getCustomerName());
 
 		// After executing this method, I should receive the customer object
@@ -59,18 +129,7 @@ public class VisitBank {
 		// 2 Encapsulation
 		// 3 Polymorphism - overloading / overriding (tostring)
 		// 4 Abstraction
-		Customer customer2 = bk.updateAccountFromAccountNo("SNGURB-1", "hari", "12-12-1996", "nashik", "PAN1234",
-				"ADHAR1234");
-		System.out.println(customer2);
-		// bk.printOneAcc("SNGURB-3");
 
-		// bk.deleteAccount("SNGURB-1");
-		System.out.println("Account deleted");
-		// bk.deleteAccount("SNGURB-3");
-		System.out.println("Account deleted");
-		// bk.deleteAccount("SNGURB-2");
-
-		bk.printAll();
 		// Once the account delete method is executed, the account should be
 		// deleted from the bank
 		// Read account method based on account number should return null object
