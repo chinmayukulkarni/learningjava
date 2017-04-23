@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 
 public class BankVersion1 implements BankInterface {
 	int customerNumber = 0;
+	int accountNumber = 0;
 	Customer[] customersArray = new Customer[15];
 
 	// This is default constructor
@@ -19,6 +20,15 @@ public class BankVersion1 implements BankInterface {
 		// This read file method should populate customersArray
 
 		super();
+		try {
+			
+			
+			readFile_Version1();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -41,23 +51,36 @@ public class BankVersion1 implements BankInterface {
 	// BankVersion1 bv = new BankVersion1();
 	Scanner sc = new Scanner(System.in);
 
-	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money) {
+	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money)
+			throws IOException {
 
-		String customerAccountNumber = "SNGURB-" + (customerNumber + 1);
+		String customerAccountNumber = "SNGURB-" + (accountNumber);
 
-		Customer cs = new Customer();
-		cs.setCustomerName(name);
-		cs.setCustomerAccno(customerAccountNumber);
-		cs.setCustomerDOB(dob);
-		cs.setCustomerAddress(addes);
-		cs.setCustomerPAN(pan);
-		cs.setCustomerAdhar(adhar);
-		cs.setMoney(money);
-		customersArray[customerNumber] = cs;
+		try {
+			Customer cs = new Customer();
+			cs.setCustomerName(name);
+			cs.setCustomerAccno(customerAccountNumber);
+			cs.setCustomerDOB(dob);
+			cs.setCustomerAddress(addes);
+			cs.setCustomerPAN(pan);
+			cs.setCustomerAdhar(adhar);
+			cs.setMoney(money);
+			customersArray[customerNumber] = cs;
 
-		customerNumber++; // total number of customer in bank represented by
-							// customerNumber
+			customerNumber++; // total number of customer in bank represented by
+								// customerNumber
+			accountNumber++;
+			System.out.println("First print statement in try block");
+			return customerAccountNumber;
 
+		} catch (ArithmeticException e) {
+			System.out.println("Warning: ArithmeticException");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Warning: ArrayIndexOutOfBoundsException");
+		} catch (Exception e) {
+			System.out.println("Warning: Some Other exception");
+		}
+		System.out.println("Out of try-catch block...");
 		return customerAccountNumber;
 	}
 
@@ -192,7 +215,7 @@ public class BankVersion1 implements BankInterface {
 
 	public Customer[] deleteAccount(String delCust) {
 		System.out.println("Customer Number: " + customerNumber);
-		Customer[] newArray = new Customer[customerNumber - 1];
+		Customer[] newArray = new Customer[15];
 		int counter = 0;
 		for (int i = 0; i < customerNumber; i++) {
 
@@ -220,6 +243,9 @@ public class BankVersion1 implements BankInterface {
 		}
 
 		OutputStream outstream = new FileOutputStream(file);
+		System.out.println("Account Number is: " + accountNumber);
+		outstream.write((accountNumber + "").getBytes());
+		outstream.write("\n".getBytes());
 		for (int i = 0; i < customerNumber; i++) {
 			Customer customer = customersArray[i];
 
@@ -284,8 +310,9 @@ public class BankVersion1 implements BankInterface {
 		BufferedReader in = new BufferedReader(myReader);
 
 		String line;
+		accountNumber = Integer.parseInt(in.readLine().trim());
 		while ((line = in.readLine()) != null) {
-			System.out.println(line);
+			// System.out.println(line);
 
 			Customer cust = new Customer();
 			StringTokenizer st = new StringTokenizer(line, "|");
@@ -307,7 +334,7 @@ public class BankVersion1 implements BankInterface {
 		in.close();
 	}
 
-	public void createHaandle() {
+	public void createHaandle() throws IOException {
 		System.out.println("");
 		System.out.print("Enter Name of AccountHolder:");
 		String name = sc.nextLine();
@@ -324,37 +351,53 @@ public class BankVersion1 implements BankInterface {
 		String adhar = sc.nextLine();
 
 		System.out.print("Enter Money for opening account:");
-		int money = (Integer.parseInt(sc.nextLine().trim()));
+		try {
+			int money = (Integer.parseInt(sc.nextLine().trim()));
+			String AccountNo = createAccountInBank(name, dob, address, pan, adhar, money); // "SNGURB-1"
+			System.out.println("Account has been successfully created with account number :" + AccountNo);
+		} catch (NumberFormatException ex) {
+			// handle your exception
+			System.out.println("Number Format Exception");
+		}
 
-		String AccountNo = createAccountInBank(name, dob, address, pan, adhar, money); // "SNGURB-1"
-		System.out.println("Account number is:" + AccountNo);
 	}
 
 	public void updateHandle() {
 		System.out.println("");
-		System.out.print("Enter Account Number in Format->SNGURB-1:");
-		String acno = sc.nextLine();
-		System.out.print("Enter Name of AccountHolder:");
-		String name = sc.nextLine();
-		System.out.print("Enter Date of Birth (dd-mm-yyyy):");
-		String dob = sc.nextLine();
-		System.out.print("Enter Address of Account Holder:");
-		String address = sc.nextLine();
-		System.out.print("Enter PAN of 1" + "Account Holder:");
-		String pan = sc.nextLine();
-		System.out.print("Enter AdharNumber of AccountHolder:");
-		String adhar = sc.nextLine();
-		// System.out.println("Enter Money for opening account:");
-		// money = (Integer.parseInt(sc.nextLine().trim()));
-		Customer customer2 = updateAccountFromAccountNo(acno, name, dob, address, pan, adhar);
-		System.out.print(customer2);
+		try {
+			System.out.print("Enter Account Number in Format->SNGURB-1:");
+
+			String acno = sc.nextLine();
+			System.out.print("Enter Name of AccountHolder:");
+			String name = sc.nextLine();
+			System.out.print("Enter Date of Birth (dd-mm-yyyy):");
+			String dob = sc.nextLine();
+			System.out.print("Enter Address of Account Holder:");
+			String address = sc.nextLine();
+			System.out.print("Enter PAN of 1" + "Account Holder:");
+			String pan = sc.nextLine();
+			System.out.print("Enter AdharNumber of AccountHolder:");
+			String adhar = sc.nextLine();
+			// System.out.println("Enter Money for opening account:");
+			// money = (Integer.parseInt(sc.nextLine().trim()));
+			Customer customer2 = updateAccountFromAccountNo(acno, name, dob, address, pan, adhar);
+			System.out.print(customer2);
+		} catch (Exception e) {
+			System.out.println("Enter String In Correct Format");
+		}
+
 	}
 
 	public void deleteHandle() {
-		System.out.print("Enter Account Number to be Deleted in Format->SNGURB-1:");
-		String acno = sc.nextLine();
-		deleteAccount(acno);
-		System.out.println("Account deleted");
+		try {
+			System.out.print("Enter Account Number to be Deleted in Format->SNGURB-1:");
+
+			String acno = sc.nextLine();
+			deleteAccount(acno);
+			System.out.println("Account deleted");
+		} catch (Exception e) {
+			System.out.println("Enter String In Correct Format");
+		}
 	}
 
 	public void printOneHandle() {
@@ -367,15 +410,27 @@ public class BankVersion1 implements BankInterface {
 		System.out.print("Enter Account Number In Which Amount To be Deposited:");
 		String acno = sc.nextLine();
 		System.out.print("Enter Amount to be Deposited in Account");
-		int money = (Integer.parseInt(sc.nextLine().trim()));
-		depositMoney(money, acno);
+		try {
+			int money = (Integer.parseInt(sc.nextLine().trim()));
+			if (depositMoney(money, acno) == null) {
+				System.out.println("String is null");
+			}
+		} catch (NumberFormatException e) {
+			System.out.println("Enter Numbers only");
+		}
 	}
 
 	public void withdrawHandle() {
 		System.out.println("Enter Account Number In Which Amount To be Withdrawl:");
 		String acno = sc.nextLine();
-		System.out.println("Enter Amount to be Deposited in Account");
-		int money = (Integer.parseInt(sc.nextLine().trim()));
-		withdrawMoney(money, acno);
+		System.out.println("Enter Amount to be withdraw from Account");
+		
+		try {
+			int money = (Integer.parseInt(sc.nextLine().trim()));
+			withdrawMoney(money, acno);
+		} catch (Exception e) {
+			System.out.println("Enter Numbers only");
+			
+		}
 	}
 }

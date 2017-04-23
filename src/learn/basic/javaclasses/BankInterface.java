@@ -3,7 +3,8 @@ package learn.basic.javaclasses;
 import java.io.IOException;
 
 public interface BankInterface {
-	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money);
+	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money)
+			throws IOException;
 
 	public Customer[] getAllCustomersInBank();
 
@@ -28,7 +29,7 @@ public interface BankInterface {
 
 	public void readFile_Version1() throws IOException;
 
-	public void createHaandle();
+	public void createHaandle() throws IOException;
 
 	public void updateHandle();
 

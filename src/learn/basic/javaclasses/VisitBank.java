@@ -9,21 +9,26 @@ public class VisitBank {
 	// return correct account number
 	public static void main(String[] args) throws IOException {
 		BankInterface bk = new BankVersion1();
-		bk.readFile_Version1();
+		// bk.readFile_Version1();
 		Scanner sc = new Scanner(System.in);
 
 		int ch = 0;
 		int choice = 0;
+		boolean isContinue = true;
+		System.out.println("************ Welcome To Chinmay Urban Bank *************");
 		do {
 
-			System.out.println("Which operation do you want to perform? ");
-			System.out.println("Select 1 for creating account");
-			System.out.println("Select 2 for updating account");
-			System.out.println("Select 3 for deleting account");
-			System.out.println("Select 4 for Print one account");
-			System.out.println("Select 5 for Print All Accounts");
-			System.out.println("Select 6 for Deposit Money");
-			System.out.println("Select 7 for WithDraw Money");
+			System.out.println("--------------------------------------------------");
+			System.out.println("Please select the operation that you would like to perform: ");
+			System.out.println("Select 1 to create an account");
+			System.out.println("Select 2 to update an existing account");
+			System.out.println("Select 3 to delete an existing account");
+			System.out.println("Select 4 to read/print single account");
+			System.out.println("Select 5 to prinat all accounts in the Bank");
+			System.out.println("Select 6 to deposit money in your account");
+			System.out.println("Select 7 to withdraw money from your account");
+			System.out.println("Select 8 to exit the program");
+			System.out.println("--------------------------------------------------");
 			choice = sc.nextInt();
 			switch (choice) {
 
@@ -55,14 +60,18 @@ public class VisitBank {
 			case 7:// Withdraw money
 				bk.withdrawHandle();
 				break;
+			case 8:// exit case
+				bk.writeFile();
+				isContinue = false;
+				break;
 
 			default:
 				System.out.println("Enter correct option from menu");
 			}
-			bk.writeFile();
-			System.out.print("Do you want to continue?(0/1)(yes/no)");
-			ch = sc.nextInt();
-		} while (ch == 0);
+
+			// System.out.print("Do you want to continue?(0/1)(yes/no)");
+			// ch = sc.nextInt();
+		} while (isContinue);
 
 		sc.close();
 		// Customer firstCustomer = bk.getAccountFromAccountNumber("SNGURB-1");
