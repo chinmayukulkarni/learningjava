@@ -12,7 +12,7 @@ public class TestClass {
 		// int money = c.getInt();
 		// System.out.println("Money " + money);
 
-		System.out.print("Enter month (Enter Account Number: ");
+		System.out.print("Enter Account Number: ");
 		String acno = c.getAcno();
 		System.out.println("Account Number" + acno);
 	}
@@ -36,11 +36,11 @@ public class TestClass {
 		String acno;
 		try {
 			acno = accountScan.nextLine();
-			if (acno.equals(acno.startsWith("SNGURB-"))) {
+			if (acno.startsWith("SNGURB")) {
 				accountScan.close();
 				return acno;
 			} else {
-				System.out.println("TRY AGAIN");
+				System.out.println("TRY AGAIN:");
 				return getAcno();
 			}
 

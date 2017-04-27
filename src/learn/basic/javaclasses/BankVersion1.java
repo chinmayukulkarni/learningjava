@@ -21,8 +21,7 @@ public class BankVersion1 implements BankInterface {
 
 		super();
 		try {
-			
-			
+
 			readFile_Version1();
 
 		} catch (IOException e) {
@@ -389,15 +388,36 @@ public class BankVersion1 implements BankInterface {
 	}
 
 	public void deleteHandle() {
+		String acno = null;
 		try {
 			System.out.print("Enter Account Number to be Deleted in Format->SNGURB-1:");
-
-			String acno = sc.nextLine();
+			getAcno(acno);
+			// String acno = sc.nextLine();
 			deleteAccount(acno);
 			System.out.println("Account deleted");
 		} catch (Exception e) {
 			System.out.println("Enter String In Correct Format");
 		}
+	}
+
+	public String getAcno(String acno) {
+		Scanner accountScan = new Scanner(System.in);
+
+		try {
+			acno = accountScan.nextLine();
+			if (acno.startsWith("SNGURB")) {
+				accountScan.close();
+				return acno;
+			} else {
+				System.out.println("TRY AGAIN:");
+				return getAcno(acno);
+			}
+
+		} catch (Exception e) {
+			System.out.println("Try again");
+			return getAcno(acno);
+		}
+
 	}
 
 	public void printOneHandle() {
@@ -424,13 +444,13 @@ public class BankVersion1 implements BankInterface {
 		System.out.println("Enter Account Number In Which Amount To be Withdrawl:");
 		String acno = sc.nextLine();
 		System.out.println("Enter Amount to be withdraw from Account");
-		
+
 		try {
 			int money = (Integer.parseInt(sc.nextLine().trim()));
 			withdrawMoney(money, acno);
 		} catch (Exception e) {
 			System.out.println("Enter Numbers only");
-			
+
 		}
 	}
 }
