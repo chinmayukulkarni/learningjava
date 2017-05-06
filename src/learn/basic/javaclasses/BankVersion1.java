@@ -393,8 +393,14 @@ public class BankVersion1 implements BankInterface {
 			System.out.print("Enter Account Number to be Deleted in Format->SNGURB-1:");
 			getAcno(acno);
 			// String acno = sc.nextLine();
-			deleteAccount(acno);
-			System.out.println("Account deleted");
+			if(acno!=null)
+			{
+				deleteAccount(acno);
+				System.out.println("Account deleted");
+			}else{
+				System.out.println("Element is not correct");
+			}
+			
 		} catch (Exception e) {
 			System.out.println("Enter String In Correct Format");
 		}
@@ -410,6 +416,7 @@ public class BankVersion1 implements BankInterface {
 				return acno;
 			} else {
 				System.out.println("TRY AGAIN:");
+				accountScan.close();
 				return getAcno(acno);
 			}
 
