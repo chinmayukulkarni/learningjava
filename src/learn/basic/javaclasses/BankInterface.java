@@ -1,6 +1,7 @@
 package learn.basic.javaclasses;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public interface BankInterface {
 	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money)
@@ -33,7 +34,7 @@ public interface BankInterface {
 
 	public void updateHandle();
 
-	public void deleteHandle();
+	public void deleteHandle(String accountNumber);
 
 	public void printOneHandle();
 
@@ -41,4 +42,5 @@ public interface BankInterface {
 
 	public void withdrawHandle();
 
+	public String getAcccountNumber(Scanner sc);
 }

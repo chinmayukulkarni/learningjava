@@ -29,6 +29,7 @@ public class VisitBank {
 			System.out.println("Select 7 to withdraw money from your account");
 			System.out.println("Select 8 to exit the program");
 			System.out.println("--------------------------------------------------");
+			
 			choice = sc.nextInt();
 			switch (choice) {
 
@@ -41,7 +42,9 @@ public class VisitBank {
 				break;
 
 			case 3:// Deleting account
-				bk.deleteHandle();
+				System.out.print("Enter Account Number to be Deleted in Format->SNGURB-1:");
+				String accountNumber = bk.getAcccountNumber(sc);
+				bk.deleteHandle(accountNumber);
 				break;
 
 			case 4:// Print one account
@@ -60,6 +63,10 @@ public class VisitBank {
 			case 7:// Withdraw money
 				bk.withdrawHandle();
 				break;
+			case 9:// Withdraw money
+				System.out.println("Print Me");
+				
+				break;
 			case 8:// exit case
 				bk.writeFile();
 				isContinue = false;
@@ -71,6 +78,7 @@ public class VisitBank {
 
 			// System.out.print("Do you want to continue?(0/1)(yes/no)");
 			// ch = sc.nextInt();
+			System.out.println("Continue...");
 		} while (isContinue);
 
 		sc.close();
