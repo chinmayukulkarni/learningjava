@@ -387,42 +387,30 @@ public class BankVersion1 implements BankInterface {
 
 	}
 
-	public void deleteHandle() {
-		String acno = null;
+	public void deleteHandle(String accountNumber) {
 		try {
-			System.out.print("Enter Account Number to be Deleted in Format->SNGURB-1:");
-			getAcno(acno);
-			// String acno = sc.nextLine();
-			if(acno!=null)
-			{
-				deleteAccount(acno);
-				System.out.println("Account deleted");
-			}else{
-				System.out.println("Element is not correct");
-			}
-			
+			deleteAccount(accountNumber);
+			System.out.println("Account deleted");
+
 		} catch (Exception e) {
 			System.out.println("Enter String In Correct Format");
 		}
 	}
 
-	public String getAcno(String acno) {
-		Scanner accountScan = new Scanner(System.in);
+	public String getAcccountNumber(Scanner sc) {
 
 		try {
-			acno = accountScan.nextLine();
+			String acno = sc.nextLine();
 			if (acno.startsWith("SNGURB")) {
-				accountScan.close();
 				return acno;
 			} else {
 				System.out.println("TRY AGAIN:");
-				accountScan.close();
-				return getAcno(acno);
+				return getAcccountNumber(sc);
 			}
 
 		} catch (Exception e) {
 			System.out.println("Try again");
-			return getAcno(acno);
+			return getAcccountNumber(sc);
 		}
 
 	}
