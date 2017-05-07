@@ -18,11 +18,14 @@ import java.util.StringTokenizer;
  */
 
 public class BankVersion2 {
-	ArrayList<Customer> myCustomerArraylist = new ArrayList<Customer>();
+	ArrayList<Customer> myCustomerArrayList = new ArrayList<Customer>();
+	int customerCounter = 0;
 
 	public static void main(String[] args) throws IOException {
 		BankVersion2 bk = new BankVersion2();
 		bk.readFile_version2();
+		bk.printAll();
+		bk.createAccountInBank("Shree", "03-09-90", "sangli", "pan1234", "adhar1234", 500);
 		bk.printAll();
 	}
 	// This is an eaxmple of using Arraylist
@@ -46,12 +49,12 @@ public class BankVersion2 {
 	// System.out.println(myArraylist.get(1));
 	// System.out.println(myArraylist.size());
 	public void readFile_version2() throws IOException {
-		int customerCounter = 0;
+
 		FileReader myReader = new FileReader("temp2.txt");
 		BufferedReader in = new BufferedReader(myReader);
 
 		String line;
-		// accountNumber = Integer.parseInt(in.readLine().trim());
+
 		while ((line = in.readLine()) != null) {
 			// System.out.println(line);
 
@@ -67,7 +70,7 @@ public class BankVersion2 {
 				cust.setCustomerAdhar(st.nextToken());
 				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
 			}
-			myCustomerArraylist.add(cust);
+			myCustomerArrayList.add(cust);
 
 			// myCustomerArraylist.add(customerCounter) = cust;
 			customerCounter++;
@@ -75,12 +78,48 @@ public class BankVersion2 {
 		}
 
 		in.close();
+		// System.out.println(customerCounter);
+	}
+
+	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money)
+			throws IOException {
+
+		String customerAccountNumber = "SNGURB-" + (customerCounter);
+
+		try {
+			Customer cs = new Customer();
+			cs.setCustomerName(name);
+			cs.setCustomerAccno(customerAccountNumber);
+			cs.setCustomerDOB(dob);
+			cs.setCustomerAddress(addes);
+			cs.setCustomerPAN(pan);
+			cs.setCustomerAdhar(adhar);
+			cs.setMoney(money);
+			myCustomerArrayList.add(cs);
+
+			// customerNumber++; // total number of customer in bank represented
+			// by
+			// customerNumber
+			customerCounter++;
+			// System.out.println("First print statement in try block");
+			return customerAccountNumber;
+
+		} catch (ArithmeticException e) {
+			System.out.println("Warning: ArithmeticException");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Warning: ArrayIndexOutOfBoundsException");
+		} catch (Exception e) {
+			System.out.println("Warning: Some Other exception");
+		}
+		System.out.println("Out of try-catch block...");
+		return customerAccountNumber;
 	}
 
 	public void printAll() {
 
-		for (int i = 0; i < myCustomerArraylist.size(); i++) {
-			System.out.println(myCustomerArraylist.get(i));
+		for (int i = 0; i < myCustomerArrayList.size(); i++) {
+			System.out.println(myCustomerArrayList.get(i));
 		}
+
 	}
 }
