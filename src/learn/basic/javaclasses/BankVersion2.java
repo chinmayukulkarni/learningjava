@@ -24,7 +24,7 @@ public class BankVersion2 {
 	public static void main(String[] args) throws IOException {
 		BankVersion2 bk = new BankVersion2();
 		bk.readFile_version2();
-		bk.printAll();
+		// bk.printAll();
 		bk.createAccountInBank("Shree", "03-09-90", "sangli", "pan1234", "adhar1234", 500);
 		bk.printAll();
 	}
@@ -50,7 +50,7 @@ public class BankVersion2 {
 	// System.out.println(myArraylist.size());
 	public void readFile_version2() throws IOException {
 
-		FileReader myReader = new FileReader("temp2.txt");
+		FileReader myReader = new FileReader("temp3.txt");
 		BufferedReader in = new BufferedReader(myReader);
 
 		String line;
