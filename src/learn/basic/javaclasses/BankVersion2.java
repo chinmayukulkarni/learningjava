@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 /**
@@ -17,7 +18,27 @@ import java.util.StringTokenizer;
  * true For assigning account number, the size/length of arraylist will be used
  */
 
-public class BankVersion2 {
+public class BankVersion2  implements BankInterface{
+	
+	
+	public BankVersion2() {
+
+		// This is the place from where you will execute read file method
+		// This read file method should populate customersArray
+
+		super();
+		try {
+
+			readFile_Version1();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+	
+	
 	ArrayList<Customer> myCustomerArrayList = new ArrayList<Customer>();
 	int customerCounter = 0;
 
@@ -121,5 +142,137 @@ public class BankVersion2 {
 			System.out.println(myCustomerArrayList.get(i));
 		}
 
+	}
+
+	@Override
+	public Customer[] getAllCustomersInBank() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Customer updateAccountFromAccountNo(String acno, String name, String addes, String dob, String pan,
+			String adhar) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Customer[] deleteAccount(String delCust) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Customer depositMoney(int amount, String accountNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Customer withdrawMoney(int amount, String accountNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Customer getAccountFromAccountNumber(String AccountNo1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void writeFile() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void printOneAcc(String oneCustomer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void readFile() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void readFile_Version1() throws IOException {
+		
+		FileReader myReader = new FileReader("temp3.txt");
+		BufferedReader in = new BufferedReader(myReader);
+
+		String line;
+
+		while ((line = in.readLine()) != null) {
+			// System.out.println(line);
+
+			Customer cust = new Customer();
+			StringTokenizer st = new StringTokenizer(line, "|");
+			while (st.hasMoreTokens()) {
+
+				cust.setCustomerName(st.nextToken());
+				cust.setCustomerAccno(st.nextToken());
+				cust.setCustomerDOB(st.nextToken());
+				cust.setCustomerAddress(st.nextToken());
+				cust.setCustomerPAN(st.nextToken());
+				cust.setCustomerAdhar(st.nextToken());
+				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
+			}
+			myCustomerArrayList.add(cust);
+
+			// myCustomerArraylist.add(customerCounter) = cust;
+			customerCounter++;
+
+		}
+
+		in.close();
+		// System.out.println(customerCounter);
+	
+	}
+
+	@Override
+	public void createHaandle() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateHandle() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteHandle(String accountNumber) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void printOneHandle() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void depositHandle() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void withdrawHandle() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getAcccountNumber(Scanner sc) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -8,7 +8,7 @@ public class VisitBank {
 	// Homework: try to remove location argument and set customer correctly
 	// return correct account number
 	public static void main(String[] args) throws IOException {
-		BankInterface bk = new BankVersion1();
+		BankInterface bk = new BankVersion2();
 		// bk.readFile_Version1();
 		Scanner sc = new Scanner(System.in);
 
