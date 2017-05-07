@@ -29,7 +29,7 @@ public class VisitBank {
 			System.out.println("Select 7 to withdraw money from your account");
 			System.out.println("Select 8 to exit the program");
 			System.out.println("--------------------------------------------------");
-			
+
 			choice = sc.nextInt();
 			switch (choice) {
 
@@ -65,7 +65,7 @@ public class VisitBank {
 				break;
 			case 9:// Withdraw money
 				System.out.println("Print Me");
-				
+
 				break;
 			case 8:// exit case
 				bk.writeFile();
