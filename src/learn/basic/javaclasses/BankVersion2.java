@@ -18,9 +18,8 @@ import java.util.StringTokenizer;
  * true For assigning account number, the size/length of arraylist will be used
  */
 
-public class BankVersion2  implements BankInterface{
-	
-	
+public class BankVersion2 implements BankInterface {
+
 	public BankVersion2() {
 
 		// This is the place from where you will execute read file method
@@ -37,8 +36,7 @@ public class BankVersion2  implements BankInterface{
 		}
 
 	}
-	
-	
+
 	ArrayList<Customer> myCustomerArrayList = new ArrayList<Customer>();
 	int customerCounter = 0;
 
@@ -116,6 +114,7 @@ public class BankVersion2  implements BankInterface{
 			cs.setCustomerPAN(pan);
 			cs.setCustomerAdhar(adhar);
 			cs.setMoney(money);
+			cs.setFlag(true);
 			myCustomerArrayList.add(cs);
 
 			// customerNumber++; // total number of customer in bank represented
@@ -153,14 +152,33 @@ public class BankVersion2  implements BankInterface{
 	@Override
 	public Customer updateAccountFromAccountNo(String acno, String name, String addes, String dob, String pan,
 			String adhar) {
-		// TODO Auto-generated method stub
+		for (int j = 0; j < myCustomerArrayList.size(); j++) {
+
+			Customer cust = myCustomerArrayList.get(j);
+
+			if (cust.getCustomerAccno().equals(acno)) {
+				cust.setCustomerAccno(acno);
+				cust.setCustomerName(name);
+				cust.setCustomerDOB(dob);
+				cust.setCustomerAddress(addes);
+				cust.setCustomerPAN(pan);
+				cust.setCustomerAdhar(adhar);
+				return cust;
+
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public Customer[] deleteAccount(String delCust) {
-		// TODO Auto-generated method stub
-		return null;
+		for (int i = 0; i < myCustomerArrayList.size(); i++) {
+			if (myCustomerArrayList.get(i).getCustomerAccno().equals(delCust)) {
+				myCustomerArrayList.get(i).setFlag(false);
+				return myCustomerArrayList;
+			}
+			return null;
+		}
 	}
 
 	@Override
@@ -184,24 +202,24 @@ public class BankVersion2  implements BankInterface{
 	@Override
 	public void writeFile() throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void printOneAcc(String oneCustomer) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void readFile() throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void readFile_Version1() throws IOException {
-		
+
 		FileReader myReader = new FileReader("temp3.txt");
 		BufferedReader in = new BufferedReader(myReader);
 
@@ -231,43 +249,43 @@ public class BankVersion2  implements BankInterface{
 
 		in.close();
 		// System.out.println(customerCounter);
-	
+
 	}
 
 	@Override
 	public void createHaandle() throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void updateHandle() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteHandle(String accountNumber) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void printOneHandle() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void depositHandle() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void withdrawHandle() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
