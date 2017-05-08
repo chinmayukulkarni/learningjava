@@ -8,7 +8,7 @@ public class VisitBank {
 	// Homework: try to remove location argument and set customer correctly
 	// return correct account number
 	public static void main(String[] args) throws IOException {
-		BankInterface bk = new BankVersion2();
+		BankInterface1 bk = new BankVersion2();
 		// bk.readFile_Version1();
 		Scanner sc = new Scanner(System.in);
 
@@ -42,9 +42,10 @@ public class VisitBank {
 				break;
 
 			case 3:// Deleting account
-				System.out.print("Enter Account Number to be Deleted in Format->SNGURB-1:");
-				String accountNumber = bk.getAcccountNumber(sc);
-				bk.deleteHandle(accountNumber);
+					// System.out.print("Enter Account Number to be Deleted in
+					// Format->SNGURB-1:");
+					// String accountNumber = bk.getAcccountNumber(sc);
+				bk.deleteHandle("SNGURB-4");
 				break;
 
 			case 4:// Print one account

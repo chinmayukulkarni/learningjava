@@ -18,7 +18,7 @@ import java.util.StringTokenizer;
  * true For assigning account number, the size/length of arraylist will be used
  */
 
-public class BankVersion2 implements BankInterface {
+public class BankVersion2 implements BankInterface1 {
 
 	public BankVersion2() {
 
@@ -136,11 +136,13 @@ public class BankVersion2 implements BankInterface {
 	}
 
 	public void printAll() {
-
+		String st = "true";
 		for (int i = 0; i < myCustomerArrayList.size(); i++) {
-			System.out.println(myCustomerArrayList.get(i));
+			Boolean rt = myCustomerArrayList.get(i).isFlag();
+			if (rt.equals(st)) {
+				System.out.println(myCustomerArrayList.get(i));
+			}
 		}
-
 	}
 
 	@Override
@@ -171,14 +173,14 @@ public class BankVersion2 implements BankInterface {
 	}
 
 	@Override
-	public Customer[] deleteAccount(String delCust) {
+	public ArrayList<Customer> deleteAccount(String delCust) {
 		for (int i = 0; i < myCustomerArrayList.size(); i++) {
 			if (myCustomerArrayList.get(i).getCustomerAccno().equals(delCust)) {
 				myCustomerArrayList.get(i).setFlag(false);
 				return myCustomerArrayList;
 			}
-			return null;
 		}
+		return null;
 	}
 
 	@Override
@@ -266,7 +268,13 @@ public class BankVersion2 implements BankInterface {
 
 	@Override
 	public void deleteHandle(String accountNumber) {
-		// TODO Auto-generated method stub
+		try {
+			deleteAccount(accountNumber);
+			System.out.println("Account deleted");
+
+		} catch (Exception e) {
+			System.out.println("Enter String In Correct Format");
+		}
 
 	}
 
