@@ -138,8 +138,15 @@ public class BankVersion2 implements BankInterface1 {
 	public void printAll() {
 		String st = "true";
 		for (int i = 0; i < myCustomerArrayList.size(); i++) {
-			Boolean rt = myCustomerArrayList.get(i).isFlag();
-			if (rt.equals(st)) {
+//			Boolean rt = myCustomerArrayList.get(i).isFlag();
+//			if (rt.equals(st)) {
+//				System.out.println(myCustomerArrayList.get(i));
+//			}
+//			System.out.println(myCustomerArrayList.get(i));
+			// conditional statements like 'if' or 'while' takes boolean values like 'true' or 'false'
+			// so you dont need to use equals
+			boolean isValid = myCustomerArrayList.get(i).isFlag();
+			if(isValid){
 				System.out.println(myCustomerArrayList.get(i));
 			}
 		}
@@ -241,6 +248,7 @@ public class BankVersion2 implements BankInterface1 {
 				cust.setCustomerPAN(st.nextToken());
 				cust.setCustomerAdhar(st.nextToken());
 				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
+				cust.setFlag(true);
 			}
 			myCustomerArrayList.add(cust);
 
