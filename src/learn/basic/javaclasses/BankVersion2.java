@@ -19,6 +19,7 @@ import java.util.StringTokenizer;
  */
 
 public class BankVersion2 implements BankInterface1 {
+	Scanner sc = new Scanner(System.in);
 
 	public BankVersion2() {
 
@@ -136,17 +137,10 @@ public class BankVersion2 implements BankInterface1 {
 	}
 
 	public void printAll() {
-		String st = "true";
+
 		for (int i = 0; i < myCustomerArrayList.size(); i++) {
-//			Boolean rt = myCustomerArrayList.get(i).isFlag();
-//			if (rt.equals(st)) {
-//				System.out.println(myCustomerArrayList.get(i));
-//			}
-//			System.out.println(myCustomerArrayList.get(i));
-			// conditional statements like 'if' or 'while' takes boolean values like 'true' or 'false'
-			// so you dont need to use equals
 			boolean isValid = myCustomerArrayList.get(i).isFlag();
-			if(isValid){
+			if (isValid) {
 				System.out.println(myCustomerArrayList.get(i));
 			}
 		}
@@ -192,13 +186,27 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public Customer depositMoney(int amount, String accountNumber) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < myCustomerArrayList.size(); i++) {
+			Customer cust = myCustomerArrayList.get(i);
+			if (cust.getCustomerAccno().equals(accountNumber)) {
+				int totalMoney = cust.getMoney() + amount;
+				cust.setMoney(totalMoney);
+				return cust;
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public Customer withdrawMoney(int amount, String accountNumber) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < myCustomerArrayList.size(); i++) {
+			Customer cust = myCustomerArrayList.get(i);
+			if (cust.getCustomerAccno().equals(accountNumber)) {
+				int totalMoney = cust.getMoney() - amount;
+				cust.setMoney(totalMoney);
+				return cust;
+			}
+		}
 		return null;
 	}
 
@@ -216,7 +224,20 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void printOneAcc(String oneCustomer) {
-		// TODO Auto-generated method stub
+		for (int j = 0; j < myCustomerArrayList.size(); j++) {
+			Customer cust = myCustomerArrayList.get(j);
+			if (cust.getCustomerAccno().equals(oneCustomer)) {
+				System.out.println(" ");
+				System.out.println("One Customer Detail: ");
+				System.out.println(cust.getCustomerAccno());
+				System.out.println(cust.getCustomerName());
+				System.out.println(cust.getCustomerDOB());
+				System.out.println(cust.getCustomerAddress());
+				System.out.println(cust.getCustomerPAN());
+				System.out.println(cust.getCustomerAdhar());
+				System.out.println(cust.getMoney());
+			}
+		}
 
 	}
 
@@ -264,13 +285,57 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void createHaandle() throws IOException {
-		// TODO Auto-generated method stub
+		System.out.println("");
+		System.out.print("Enter Name of AccountHolder:");
+		String name = sc.nextLine();
+
+		System.out.print("Enter Date of Birth (dd-mm-yyyy):");
+		String dob = sc.nextLine();
+
+		System.out.print("Enter Address of Account Holder:");
+		String address = sc.nextLine();
+		System.out.print("Enter PAN of Account Holder:");
+		String pan = sc.nextLine();
+
+		System.out.print("Enter AdharNumber of AccountHolder:");
+		String adhar = sc.nextLine();
+
+		System.out.print("Enter Money for opening account:");
+		try {
+			int money = (Integer.parseInt(sc.nextLine().trim()));
+			String AccountNo = createAccountInBank(name, dob, address, pan, adhar, money); // "SNGURB-1"
+			System.out.println("Account has been successfully created with account number :" + AccountNo);
+		} catch (NumberFormatException ex) {
+			// handle your exception
+			System.out.println("Number Format Exception");
+		}
 
 	}
 
 	@Override
 	public void updateHandle() {
-		// TODO Auto-generated method stub
+		System.out.println("");
+		try {
+			System.out.print("Enter Account Number in Format->SNGURB-1:");
+
+			String acno = sc.nextLine();
+			System.out.print("Enter Name of AccountHolder:");
+			String name = sc.nextLine();
+			System.out.print("Enter Date of Birth (dd-mm-yyyy):");
+			String dob = sc.nextLine();
+			System.out.print("Enter Address of Account Holder:");
+			String address = sc.nextLine();
+			System.out.print("Enter PAN of 1" + "Account Holder:");
+			String pan = sc.nextLine();
+			System.out.print("Enter AdharNumber of AccountHolder:");
+			String adhar = sc.nextLine();
+			// System.out.println("Enter Money for opening account:");
+			// money = (Integer.parseInt(sc.nextLine().trim()));
+			Customer customer2 = updateAccountFromAccountNo(acno, name, dob, address, pan, adhar);
+			System.out.print(customer2);
+		} catch (Exception e) {
+			System.out.println("Enter String In Correct Format");
+		}
 
 	}
 
@@ -288,20 +353,41 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void printOneHandle() {
-		// TODO Auto-generated method stub
+		System.out.print("Enter Account Number to be Printed in Format->SNGURB-1:");
+		String acno = sc.nextLine();
+		printOneAcc(acno);
 
 	}
 
 	@Override
 	public void depositHandle() {
-		// TODO Auto-generated method stub
+		System.out.print("Enter Account Number In Which Amount To be Deposited:");
+		String acno = sc.nextLine();
+		System.out.print("Enter Amount to be Deposited in Account");
+		try {
+			int money = (Integer.parseInt(sc.nextLine().trim()));
+			if (depositMoney(money, acno) == null) {
+				System.out.println("String is null");
+			}
+		} catch (NumberFormatException e) {
+			System.out.println("Enter Numbers only");
+		}
 
 	}
 
 	@Override
 	public void withdrawHandle() {
-		// TODO Auto-generated method stub
+		System.out.println("Enter Account Number In Which Amount To be Withdrawl:");
+		String acno = sc.nextLine();
+		System.out.println("Enter Amount to be withdraw from Account");
 
+		try {
+			int money = (Integer.parseInt(sc.nextLine().trim()));
+			withdrawMoney(money, acno);
+		} catch (Exception e) {
+			System.out.println("Enter Numbers only");
+
+		}
 	}
 
 	@Override
