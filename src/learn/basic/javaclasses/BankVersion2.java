@@ -212,7 +212,6 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public Customer getAccountFromAccountNumber(String AccountNo1) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
