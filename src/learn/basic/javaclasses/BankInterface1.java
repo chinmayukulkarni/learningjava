@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public interface BankInterface1 {
-	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money)
-			throws IOException;
+	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money,
+			int mobNo) throws IOException;
 
 	public Customer[] getAllCustomersInBank();
 
 	public Customer updateAccountFromAccountNo(String acno, String name, String addes, String dob, String pan,
-			String adhar);
+			String adhar, int mobNo);
 
-	public ArrayList<Customer> deleteAccount(String delCust);
+	public ArrayList<Customer> deleteAccount(String delcust);
 
 	public Customer depositMoney(int amount, String accountNumber);
 
@@ -36,7 +36,7 @@ public interface BankInterface1 {
 
 	public void updateHandle();
 
-	public void deleteHandle(String accountNumber);
+	public void deleteHandle();
 
 	public void printOneHandle();
 
@@ -44,5 +44,5 @@ public interface BankInterface1 {
 
 	public void withdrawHandle();
 
-	public String getAcccountNumber(Scanner sc);
+	public String getAcccountNumber(String delcust);
 }

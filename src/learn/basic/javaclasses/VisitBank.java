@@ -45,7 +45,7 @@ public class VisitBank {
 					// System.out.print("Enter Account Number to be Deleted in
 					// Format->SNGURB-1:");
 					// String accountNumber = bk.getAcccountNumber(sc);
-				bk.deleteHandle("SNGURB-4");
+				bk.deleteHandle();
 				break;
 
 			case 4:// Print one account

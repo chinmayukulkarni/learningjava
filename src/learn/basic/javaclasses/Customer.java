@@ -8,14 +8,23 @@ public class Customer {
 	String customerPAN;
 	String customerAdhar;
 	int money;
+	int mobNo;
 	boolean flag;
+
+	public int getMobNo() {
+		return mobNo;
+	}
+
+	public void setMobNo(int mobNo) {
+		this.mobNo = mobNo;
+	}
 
 	public boolean isFlag() {
 		return flag;
 	}
 
-	public void setFlag(boolean flag) {
-		this.flag = flag;
+	public void setFlag(boolean string) {
+		this.flag = string;
 	}
 
 	public String getCustomerName() {
@@ -77,7 +86,7 @@ public class Customer {
 	@Override
 	public String toString() {
 		return customerName + "|" + customerAccno + "|" + customerDOB + "|" + customerAddress + "|" + customerPAN + "|"
-				+ customerAdhar + "|" + money;
+				+ customerAdhar + "|" + money + "|" + flag + "|" + mobNo;
 	}
 
 }

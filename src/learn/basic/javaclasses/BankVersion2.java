@@ -1,8 +1,11 @@
 package learn.basic.javaclasses;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -19,7 +22,7 @@ import java.util.StringTokenizer;
  */
 
 public class BankVersion2 implements BankInterface1 {
-	Scanner sc = new Scanner(System.in);
+	Scanner sc1 = new Scanner(System.in);
 
 	public BankVersion2() {
 
@@ -41,13 +44,6 @@ public class BankVersion2 implements BankInterface1 {
 	ArrayList<Customer> myCustomerArrayList = new ArrayList<Customer>();
 	int customerCounter = 0;
 
-	public static void main(String[] args) throws IOException {
-		BankVersion2 bk = new BankVersion2();
-		bk.readFile_version2();
-		// bk.printAll();
-		bk.createAccountInBank("Shree", "03-09-90", "sangli", "pan1234", "adhar1234", 500);
-		bk.printAll();
-	}
 	// This is an eaxmple of using Arraylist
 
 	// Arraylist is of type collection, which can be used to replace array
@@ -89,6 +85,7 @@ public class BankVersion2 implements BankInterface1 {
 				cust.setCustomerPAN(st.nextToken());
 				cust.setCustomerAdhar(st.nextToken());
 				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
+				cust.setMobNo(Integer.parseInt(st.nextToken().trim()));
 			}
 			myCustomerArrayList.add(cust);
 
@@ -101,8 +98,8 @@ public class BankVersion2 implements BankInterface1 {
 		// System.out.println(customerCounter);
 	}
 
-	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money)
-			throws IOException {
+	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money,
+			int mobNo) throws IOException {
 
 		String customerAccountNumber = "SNGURB-" + (customerCounter);
 
@@ -116,6 +113,7 @@ public class BankVersion2 implements BankInterface1 {
 			cs.setCustomerAdhar(adhar);
 			cs.setMoney(money);
 			cs.setFlag(true);
+			cs.setMobNo(mobNo);
 			myCustomerArrayList.add(cs);
 
 			// customerNumber++; // total number of customer in bank represented
@@ -139,10 +137,10 @@ public class BankVersion2 implements BankInterface1 {
 	public void printAll() {
 
 		for (int i = 0; i < myCustomerArrayList.size(); i++) {
-			boolean isValid = myCustomerArrayList.get(i).isFlag();
-			if (isValid) {
-				System.out.println(myCustomerArrayList.get(i));
-			}
+			// boolean isValid = myCustomerArrayList.get(i).isFlag();
+			// if (isValid) {
+			System.out.println(myCustomerArrayList.get(i));
+			// }
 		}
 	}
 
@@ -154,7 +152,7 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public Customer updateAccountFromAccountNo(String acno, String name, String addes, String dob, String pan,
-			String adhar) {
+			String adhar, int mobNo) {
 		for (int j = 0; j < myCustomerArrayList.size(); j++) {
 
 			Customer cust = myCustomerArrayList.get(j);
@@ -168,17 +166,6 @@ public class BankVersion2 implements BankInterface1 {
 				cust.setCustomerAdhar(adhar);
 				return cust;
 
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public ArrayList<Customer> deleteAccount(String delCust) {
-		for (int i = 0; i < myCustomerArrayList.size(); i++) {
-			if (myCustomerArrayList.get(i).getCustomerAccno().equals(delCust)) {
-				myCustomerArrayList.get(i).setFlag(false);
-				return myCustomerArrayList;
 			}
 		}
 		return null;
@@ -217,8 +204,27 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void writeFile() throws IOException {
-		// TODO Auto-generated method stub
+		String file = "temp3.txt";
+		File FileRefrance = new File(file);
+		if (FileRefrance.exists()) {
+			System.out.println("File exists");
 
+		} else {
+			System.out.println("File does not exist new one created");
+		}
+
+		OutputStream outstream = new FileOutputStream(file);
+		// System.out.println("Account Number is: " + accountNumber);
+		// outstream.write((accountNumber + "").getBytes());
+		// outstream.write("\n".getBytes());
+		for (int i = 0; i < customerCounter; i++) {
+			Customer customer = myCustomerArrayList.get(i);
+
+			String customerInStringFormat = customer.toString();
+			outstream.write(customerInStringFormat.getBytes());
+			outstream.write("\n".getBytes());
+		}
+		outstream.close();
 	}
 
 	@Override
@@ -226,15 +232,16 @@ public class BankVersion2 implements BankInterface1 {
 		for (int j = 0; j < myCustomerArrayList.size(); j++) {
 			Customer cust = myCustomerArrayList.get(j);
 			if (cust.getCustomerAccno().equals(oneCustomer)) {
-				System.out.println(" ");
+
 				System.out.println("One Customer Detail: ");
-				System.out.println(cust.getCustomerAccno());
-				System.out.println(cust.getCustomerName());
-				System.out.println(cust.getCustomerDOB());
-				System.out.println(cust.getCustomerAddress());
-				System.out.println(cust.getCustomerPAN());
-				System.out.println(cust.getCustomerAdhar());
-				System.out.println(cust.getMoney());
+				System.out.println("Account Number is:" + cust.getCustomerAccno());
+				System.out.println("Customer Name is" + cust.getCustomerName());
+				System.out.println("DOB is:" + cust.getCustomerDOB());
+				System.out.println("Address:" + cust.getCustomerAddress());
+				System.out.println("Pan:" + cust.getCustomerPAN());
+				System.out.println("Adhar:" + cust.getCustomerAdhar());
+				System.out.println("Balance:" + cust.getMoney());
+				System.out.println(cust.isFlag());
 			}
 		}
 
@@ -268,7 +275,13 @@ public class BankVersion2 implements BankInterface1 {
 				cust.setCustomerPAN(st.nextToken());
 				cust.setCustomerAdhar(st.nextToken());
 				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
+
+				// if (st.nextToken().trim().equals(true)) {
 				cust.setFlag(true);
+				//
+
+				cust.setMobNo(Integer.parseInt(st.nextToken().trim()));
+
 			}
 			myCustomerArrayList.add(cust);
 
@@ -284,25 +297,28 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void createHaandle() throws IOException {
-		System.out.println("");
+
 		System.out.print("Enter Name of AccountHolder:");
-		String name = sc.nextLine();
+		String name = sc1.nextLine();
 
 		System.out.print("Enter Date of Birth (dd-mm-yyyy):");
-		String dob = sc.nextLine();
+		String dob = sc1.nextLine();
 
 		System.out.print("Enter Address of Account Holder:");
-		String address = sc.nextLine();
+		String address = sc1.nextLine();
 		System.out.print("Enter PAN of Account Holder:");
-		String pan = sc.nextLine();
+		String pan = sc1.nextLine();
 
 		System.out.print("Enter AdharNumber of AccountHolder:");
-		String adhar = sc.nextLine();
+		String adhar = sc1.nextLine();
+
+		System.out.print("Enter Mobile Number:");
+		int mobNo = Integer.parseInt(sc1.nextLine().trim());
 
 		System.out.print("Enter Money for opening account:");
 		try {
-			int money = (Integer.parseInt(sc.nextLine().trim()));
-			String AccountNo = createAccountInBank(name, dob, address, pan, adhar, money); // "SNGURB-1"
+			int money = (Integer.parseInt(sc1.nextLine().trim()));
+			String AccountNo = createAccountInBank(name, dob, address, pan, adhar, money, mobNo); // "SNGURB-1"
 			System.out.println("Account has been successfully created with account number :" + AccountNo);
 		} catch (NumberFormatException ex) {
 			// handle your exception
@@ -315,61 +331,72 @@ public class BankVersion2 implements BankInterface1 {
 	public void updateHandle() {
 		System.out.println("");
 		try {
-			System.out.print("Enter Account Number in Format->SNGURB-1:");
-
-			String acno = sc.nextLine();
+			// System.out.print("Enter Account Number in Format->SNGURB-1:");
+			// String acno = sc1.nextLine();
+			String acno = getAcccountNumber(sc1.nextLine());
 			System.out.print("Enter Name of AccountHolder:");
-			String name = sc.nextLine();
+			String name = sc1.nextLine();
 			System.out.print("Enter Date of Birth (dd-mm-yyyy):");
-			String dob = sc.nextLine();
+			String dob = sc1.nextLine();
 			System.out.print("Enter Address of Account Holder:");
-			String address = sc.nextLine();
-			System.out.print("Enter PAN of 1" + "Account Holder:");
-			String pan = sc.nextLine();
+			String address = sc1.nextLine();
+			System.out.print("Enter PAN of Account Holder:");
+			String pan = sc1.nextLine();
 			System.out.print("Enter AdharNumber of AccountHolder:");
-			String adhar = sc.nextLine();
+			String adhar = sc1.nextLine();
+			System.out.print("Enter Mobile Number:");
+			int mobNo = Integer.parseInt(sc1.nextLine().trim());
+
 			// System.out.println("Enter Money for opening account:");
 			// money = (Integer.parseInt(sc.nextLine().trim()));
-			Customer customer2 = updateAccountFromAccountNo(acno, name, dob, address, pan, adhar);
-			System.out.print(customer2);
+			Customer customer2 = updateAccountFromAccountNo(acno, name, dob, address, pan, adhar, mobNo);
+			System.out.println(customer2);
+			System.out.println("Account Update Successfully");
 		} catch (Exception e) {
-			System.out.println("Enter String In Correct Format");
+			System.out.println("Enter String In Correct Format" + e);
 		}
 
 	}
 
 	@Override
-	public void deleteHandle(String accountNumber) {
+	public void deleteHandle() {
+
 		try {
-			deleteAccount(accountNumber);
-			System.out.println("Account deleted");
+
+			String delcust = null;
+			// getAcccountNumber(delcust);
+			deleteAccount(getAcccountNumber(delcust));
+			System.out.println("Account deleted Successfully");
 
 		} catch (Exception e) {
-			System.out.println("Enter String In Correct Format");
+			System.out.println("Enter String In Correct Format" + e);
+			deleteHandle();
 		}
 
 	}
 
 	@Override
 	public void printOneHandle() {
-		System.out.print("Enter Account Number to be Printed in Format->SNGURB-1:");
-		String acno = sc.nextLine();
+		// System.out.print("Enter Account Number to be Printed in
+		// Format->SNGURB-1:");
+		// String acno = sc1.nextLine();
+		String acno = getAcccountNumber(sc1.nextLine());
 		printOneAcc(acno);
-
+		System.out.println("Single Account Printed Successfully");
 	}
 
 	@Override
 	public void depositHandle() {
 		System.out.print("Enter Account Number In Which Amount To be Deposited:");
-		String acno = sc.nextLine();
+		String acno = sc1.nextLine();
 		System.out.print("Enter Amount to be Deposited in Account");
 		try {
-			int money = (Integer.parseInt(sc.nextLine().trim()));
+			int money = (Integer.parseInt(sc1.nextLine().trim()));
 			if (depositMoney(money, acno) == null) {
 				System.out.println("String is null");
 			}
 		} catch (NumberFormatException e) {
-			System.out.println("Enter Numbers only");
+			System.out.println("Enter Numbers only" + e);
 		}
 
 	}
@@ -377,11 +404,11 @@ public class BankVersion2 implements BankInterface1 {
 	@Override
 	public void withdrawHandle() {
 		System.out.println("Enter Account Number In Which Amount To be Withdrawl:");
-		String acno = sc.nextLine();
+		String acno = sc1.nextLine();
 		System.out.println("Enter Amount to be withdraw from Account");
 
 		try {
-			int money = (Integer.parseInt(sc.nextLine().trim()));
+			int money = (Integer.parseInt(sc1.nextLine().trim()));
 			withdrawMoney(money, acno);
 		} catch (Exception e) {
 			System.out.println("Enter Numbers only");
@@ -390,8 +417,32 @@ public class BankVersion2 implements BankInterface1 {
 	}
 
 	@Override
-	public String getAcccountNumber(Scanner sc) {
-		// TODO Auto-generated method stub
+	public String getAcccountNumber(String delcust) {
+		try {
+			System.out.println("Enter account Number to be Printed in Format->SNGURB-1");
+			String acno = sc1.nextLine();
+			if (acno.startsWith("SNGURB")) {
+				// return sc1;
+				return acno;
+			} else {
+				System.out.println("TRY AGAIN:");
+				return getAcccountNumber(delcust);
+			}
+		} catch (Exception e) {
+			System.out.println("Try again");
+			return getAcccountNumber(delcust);
+		}
+	}
+
+	@Override
+	public ArrayList<Customer> deleteAccount(String delcust) {
+		for (int i = 0; i < myCustomerArrayList.size(); i++) {
+			if (myCustomerArrayList.get(i).getCustomerAccno().equals(delcust)) {
+				myCustomerArrayList.get(i).setFlag(false);
+
+				return myCustomerArrayList;
+			}
+		}
 		return null;
 	}
 }
