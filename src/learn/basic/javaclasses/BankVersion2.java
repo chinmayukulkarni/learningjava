@@ -42,6 +42,9 @@ public class BankVersion2 implements BankInterface1 {
 	}
 
 	ArrayList<Customer> myCustomerArrayList = new ArrayList<Customer>();
+	// BankVersion2 bk = new BankVersion2();
+
+	Customer ck = new Customer();
 	int customerCounter = 0;
 
 	// This is an eaxmple of using Arraylist
@@ -135,12 +138,21 @@ public class BankVersion2 implements BankInterface1 {
 	}
 
 	public void printAll() {
+		System.out.format("%8s%10s%15s%15s%17s%17s%15s", "Name", "Account no", "DOB", "Address", "Pan", "Adhar",
+				"Mob no");
+		System.out.println(" ");
 
 		for (int i = 0; i < myCustomerArrayList.size(); i++) {
-			// boolean isValid = myCustomerArrayList.get(i).isFlag();
-			// if (isValid) {
-			System.out.println(myCustomerArrayList.get(i));
-			// }
+			boolean isValid = myCustomerArrayList.get(i).isFlag();
+			if (isValid) {
+
+				System.out.format("%8s%10s%15s%15s%17s%17s%15s", "" + myCustomerArrayList.get(i).getCustomerName(),
+						myCustomerArrayList.get(i).getCustomerAccno(), myCustomerArrayList.get(i).getCustomerDOB(),
+						"" + myCustomerArrayList.get(i).getCustomerAddress(),
+						myCustomerArrayList.get(i).getCustomerPAN(), myCustomerArrayList.get(i).getCustomerAdhar(),
+						myCustomerArrayList.get(i).getMobNo());
+				System.out.println("\n-----------------------------");
+			}
 		}
 	}
 
