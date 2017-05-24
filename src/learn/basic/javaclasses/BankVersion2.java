@@ -299,6 +299,7 @@ public class BankVersion2 implements BankInterface1 {
 				// } else {
 				// cust.setFlag(false);
 				// }
+
 				cust.setMobNo(Integer.parseInt(st.nextToken().trim()));
 			}
 			myCustomerArrayList.add(cust);
