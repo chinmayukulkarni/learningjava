@@ -216,7 +216,7 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void writeFile() throws IOException {
-		String file = "temp3.txt";
+		String file = "temp4.txt";
 		File FileRefrance = new File(file);
 		if (FileRefrance.exists()) {
 			System.out.println("File exists");
@@ -268,7 +268,7 @@ public class BankVersion2 implements BankInterface1 {
 	@Override
 	public void readFile_Version1() throws IOException {
 
-		FileReader myReader = new FileReader("temp3.txt");
+		FileReader myReader = new FileReader("temp4.txt");
 		BufferedReader in = new BufferedReader(myReader);
 
 		String line;
@@ -280,20 +280,20 @@ public class BankVersion2 implements BankInterface1 {
 			StringTokenizer st = new StringTokenizer(line, "|");
 			while (st.hasMoreTokens()) {
 
-				cust.setCustomerName(st.nextToken());
-				cust.setCustomerAccno(st.nextToken());
-				cust.setCustomerDOB(st.nextToken());
-				cust.setCustomerAddress(st.nextToken());
-				cust.setCustomerPAN(st.nextToken());
-				cust.setCustomerAdhar(st.nextToken());
+				cust.setCustomerName(st.nextToken().trim());
+				cust.setCustomerAccno(st.nextToken().trim());
+				cust.setCustomerDOB(st.nextToken().trim());
+				cust.setCustomerAddress(st.nextToken().trim());
+				cust.setCustomerPAN(st.nextToken().trim());
+				cust.setCustomerAdhar(st.nextToken().trim());
 				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
 
 				// if (st.nextToken().trim().equals(true)) {
 				cust.setFlag(true);
-				//
-
+				// } else {
+				// cust.setFlag(false);
+				// }
 				cust.setMobNo(Integer.parseInt(st.nextToken().trim()));
-
 			}
 			myCustomerArrayList.add(cust);
 
