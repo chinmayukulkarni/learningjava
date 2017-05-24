@@ -241,6 +241,7 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void printOneAcc(String oneCustomer) {
+		String delcust = null;
 		for (int j = 0; j < myCustomerArrayList.size(); j++) {
 			Customer cust = myCustomerArrayList.get(j);
 			if (cust.getCustomerAccno().equals(oneCustomer)) {
@@ -254,6 +255,11 @@ public class BankVersion2 implements BankInterface1 {
 				System.out.println("Adhar:" + cust.getCustomerAdhar());
 				System.out.println("Balance:" + cust.getMoney());
 				System.out.println(cust.isFlag());
+				System.out.println("Single Account Printed Successfully");
+			} else {
+				System.out.println("You Have Entered Wrong Account No");
+				System.out.println("Please Enter Correct Account Number");
+				printOneHandle();
 			}
 		}
 
@@ -378,7 +384,6 @@ public class BankVersion2 implements BankInterface1 {
 			String delcust = null;
 			// getAcccountNumber(delcust);
 			deleteAccount(getAcccountNumber(delcust));
-			System.out.println("Account deleted Successfully");
 
 		} catch (Exception e) {
 			System.out.println("Enter String In Correct Format" + e);
@@ -394,38 +399,56 @@ public class BankVersion2 implements BankInterface1 {
 		// String acno = sc1.nextLine();
 		String acno = getAcccountNumber(sc1.nextLine());
 		printOneAcc(acno);
-		System.out.println("Single Account Printed Successfully");
+
 	}
 
 	@Override
 	public void depositHandle() {
 		System.out.print("Enter Account Number In Which Amount To be Deposited:");
 		String acno = sc1.nextLine();
-		System.out.print("Enter Amount to be Deposited in Account");
-		try {
-			int money = (Integer.parseInt(sc1.nextLine().trim()));
-			if (depositMoney(money, acno) == null) {
-				System.out.println("String is null");
-			}
-		} catch (NumberFormatException e) {
-			System.out.println("Enter Numbers only" + e);
-		}
 
+		for (int i = 0; i < myCustomerArrayList.size(); i++) {
+			if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
+				System.out.print("Enter Amount to be Deposited in Account");
+				try {
+					int money = (Integer.parseInt(sc1.nextLine().trim()));
+					if (depositMoney(money, acno) == null) {
+						System.out.println("String is null");
+					}
+					System.out.println("Money Diposited Successfully!");
+				} catch (NumberFormatException e) {
+					System.out.println("Enter Numbers only");
+					depositHandle();
+				}
+			} else {
+				System.out.println("Enter Correct Account Number only");
+				depositHandle();
+			}
+		}
 	}
 
 	@Override
 	public void withdrawHandle() {
 		System.out.println("Enter Account Number In Which Amount To be Withdrawl:");
 		String acno = sc1.nextLine();
-		System.out.println("Enter Amount to be withdraw from Account");
+		for (int i = 0; i < myCustomerArrayList.size(); i++) {
+			if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
+				System.out.println("Enter Amount to be withdraw from Account");
 
-		try {
-			int money = (Integer.parseInt(sc1.nextLine().trim()));
-			withdrawMoney(money, acno);
-		} catch (Exception e) {
-			System.out.println("Enter Numbers only");
-
+				try {
+					int money = (Integer.parseInt(sc1.nextLine().trim()));
+					withdrawMoney(money, acno);
+					System.out.println("Money Withdraw Successfully!");
+				} catch (Exception e) {
+					System.out.println("Enter Numbers only");
+					withdrawHandle();
+				}
+			} else {
+				System.out.println("Enter Correct Account Number only");
+				withdrawHandle();
+			}
 		}
+
 	}
 
 	@Override
@@ -453,6 +476,9 @@ public class BankVersion2 implements BankInterface1 {
 				myCustomerArrayList.get(i).setFlag(false);
 
 				return myCustomerArrayList;
+			} else {
+				System.out.println("Account not present");
+				deleteHandle();
 			}
 		}
 		return null;
