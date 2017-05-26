@@ -473,12 +473,15 @@ public class BankVersion2 implements BankInterface1 {
 	public ArrayList<Customer> deleteAccount(String delcust) {
 		try {
 			for (int i = 0; i < myCustomerArrayList.size(); i++) {
-				while (delcust.equals(myCustomerArrayList.get(i).getCustomerAccno())) {
-					if (myCustomerArrayList.get(i).getCustomerAccno().equals(delcust)) {
+				if (myCustomerArrayList.get(i).isFlag()) {
+					while (delcust.equals(myCustomerArrayList.get(i).getCustomerAccno())) {
 
-						myCustomerArrayList.get(i).setFlag(false);
-						System.out.println("Account Deleted Successfully");
-						return myCustomerArrayList;
+						if (myCustomerArrayList.get(i).getCustomerAccno().equals(delcust)) {
+
+							myCustomerArrayList.get(i).setFlag(false);
+							System.out.println("Account Deleted Successfully");
+							return myCustomerArrayList;
+						}
 					}
 				}
 			}
