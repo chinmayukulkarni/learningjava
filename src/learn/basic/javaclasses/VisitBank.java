@@ -12,7 +12,6 @@ public class VisitBank {
 		// bk.readFile_Version1();
 		Scanner sc = new Scanner(System.in);
 
-		int ch = 0;
 		int choice = 0;
 		boolean isContinue = true;
 		System.out.println("************ Welcome To Chinmay Urban Bank *************");

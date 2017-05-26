@@ -44,5 +44,9 @@ public interface BankInterface1 {
 
 	public void withdrawHandle();
 
-	public String getAcccountNumber(String delcust);
+	public String getAcccountNumber();
+
+	
+
+	
 }
