@@ -138,7 +138,7 @@ public class BankVersion2 implements BankInterface1 {
 	}
 
 	public void printAll() {
-		System.out.format("%8s%10s%15s%15s%17s%17s%15s", "Name", "Account no", "DOB", "Address", "Pan", "Adhar",
+		System.out.format("%15s%15s%15s%25s%17s%17s%15s", "Name", "Account no", "DOB", "Address", "Pan", "Adhar",
 				"Mob no");
 		System.out.println(" ");
 
@@ -146,12 +146,12 @@ public class BankVersion2 implements BankInterface1 {
 			boolean isValid = myCustomerArrayList.get(i).isFlag();
 			if (isValid) {
 
-				System.out.format("%8s%10s%15s%15s%17s%17s%15s", "" + myCustomerArrayList.get(i).getCustomerName(),
+				System.out.format("%15s%15s%15s%25s%17s%17s%15s", "" + myCustomerArrayList.get(i).getCustomerName(),
 						myCustomerArrayList.get(i).getCustomerAccno(), myCustomerArrayList.get(i).getCustomerDOB(),
 						"" + myCustomerArrayList.get(i).getCustomerAddress(),
 						myCustomerArrayList.get(i).getCustomerPAN(), myCustomerArrayList.get(i).getCustomerAdhar(),
 						myCustomerArrayList.get(i).getMobNo());
-				System.out.println("\n-----------------------------");
+				System.out.println("\n---------------------------------------------------");
 			}
 		}
 	}
@@ -216,7 +216,7 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void writeFile() throws IOException {
-		String file = "temp4.txt";
+		String file = "temp3.txt";
 		File FileRefrance = new File(file);
 		if (FileRefrance.exists()) {
 			System.out.println("File exists");
@@ -241,7 +241,7 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void printOneAcc(String oneCustomer) {
-		String delcust = null;
+
 		for (int j = 0; j < myCustomerArrayList.size(); j++) {
 			Customer cust = myCustomerArrayList.get(j);
 			if (cust.getCustomerAccno().equals(oneCustomer)) {
@@ -274,7 +274,7 @@ public class BankVersion2 implements BankInterface1 {
 	@Override
 	public void readFile_Version1() throws IOException {
 
-		FileReader myReader = new FileReader("temp4.txt");
+		FileReader myReader = new FileReader("temp3.txt");
 		BufferedReader in = new BufferedReader(myReader);
 
 		String line;
@@ -294,11 +294,11 @@ public class BankVersion2 implements BankInterface1 {
 				cust.setCustomerAdhar(st.nextToken().trim());
 				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
 
-				// if (st.nextToken().trim().equals(true)) {
-				cust.setFlag(true);
-				// } else {
-				// cust.setFlag(false);
-				// }
+				if (st.nextToken().trim().equals("true")) {
+					cust.setFlag(true);
+				} else {
+					cust.setFlag(false);
+				}
 
 				cust.setMobNo(Integer.parseInt(st.nextToken().trim()));
 			}
@@ -348,11 +348,11 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void updateHandle() {
-		System.out.println("");
+		String acno = getAcccountNumber(sc1.nextLine());
 		try {
 			// System.out.print("Enter Account Number in Format->SNGURB-1:");
 			// String acno = sc1.nextLine();
-			String acno = getAcccountNumber(sc1.nextLine());
+
 			System.out.print("Enter Name of AccountHolder:");
 			String name = sc1.nextLine();
 			System.out.print("Enter Date of Birth (dd-mm-yyyy):");
@@ -381,9 +381,8 @@ public class BankVersion2 implements BankInterface1 {
 	public void deleteHandle() {
 
 		try {
-
 			String delcust = null;
-			// getAcccountNumber(delcust);
+
 			deleteAccount(getAcccountNumber(delcust));
 
 		} catch (Exception e) {
@@ -472,15 +471,22 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public ArrayList<Customer> deleteAccount(String delcust) {
-		for (int i = 0; i < myCustomerArrayList.size(); i++) {
-			if (myCustomerArrayList.get(i).getCustomerAccno().equals(delcust)) {
-				myCustomerArrayList.get(i).setFlag(false);
+		try {
+			for (int i = 0; i < myCustomerArrayList.size(); i++) {
+				while (delcust.equals(myCustomerArrayList.get(i).getCustomerAccno())) {
+					if (myCustomerArrayList.get(i).getCustomerAccno().equals(delcust)) {
 
-				return myCustomerArrayList;
-			} else {
-				System.out.println("Account not present");
-				deleteHandle();
+						myCustomerArrayList.get(i).setFlag(false);
+						System.out.println("Account Deleted Successfully");
+						return myCustomerArrayList;
+					}
+				}
 			}
+			System.out.println("Account Not Present in Database");
+			deleteHandle();
+		} catch (Exception e) {
+			System.out.println("Enter Correct Account number");
+			deleteHandle();
 		}
 		return null;
 	}
