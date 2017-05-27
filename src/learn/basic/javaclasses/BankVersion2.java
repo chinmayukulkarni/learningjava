@@ -166,38 +166,31 @@ public class BankVersion2 implements BankInterface1 {
 	public Customer updateAccountFromAccountNo(String acno, String name, String addes, String dob, String pan,
 			String adhar, int mobNo) {
 		try {
-			for (int j = 0; j < myCustomerArrayList.size(); j++) {
+			for (int i = 0; i < myCustomerArrayList.size(); i++) {
+				if (myCustomerArrayList.get(i).isFlag()) {
+				if (acno.equals(myCustomerArrayList.get(i).getCustomerAccno())) {
+					
+						if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
+							Customer cust = myCustomerArrayList.get(i);
 
-				if (myCustomerArrayList.get(j).isFlag()) {
-					while (acno.equals(myCustomerArrayList.get(j).getCustomerAccno())) {
+							if (cust.getCustomerAccno().equals(acno)) {
+								cust.setCustomerAccno(acno);
+								cust.setCustomerName(name);
+								cust.setCustomerDOB(dob);
+								cust.setCustomerAddress(addes);
+								cust.setCustomerPAN(pan);
+								cust.setCustomerAdhar(adhar);
+								return cust;
 
-						Customer cust = myCustomerArrayList.get(j);
-
-						if (cust.getCustomerAccno().equals(acno)) {
-							cust.setCustomerAccno(acno);
-							cust.setCustomerName(name);
-							cust.setCustomerDOB(dob);
-							cust.setCustomerAddress(addes);
-							cust.setCustomerPAN(pan);
-							cust.setCustomerAdhar(adhar);
-							return cust;
-
+							}
 						}
 					}
 				}
-			}System.out.println("Account Not Present in Database");
-			System.out.println("Do you want to continue?(1/0)");
-			String bl=sc1.nextLine();
-			while(bl.equals("1")){
-			updateHandle();
+
 			}
 		} catch (Exception e) {
-			System.out.println("Wrong data Entered try again");
-			System.out.println("Do you want to continue?(1/0)");
-			String bl=sc1.nextLine();
-			while(bl.equals("1")){
-			updateHandle();
-			}
+
+			System.out.println("Error");
 		}
 
 		return null;
@@ -368,31 +361,57 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void updateHandle() {
-		String acno = getAcccountNumber();
+		boolean exit1=true;
 		try {
+
+			String acno = getAcccountNumber();
 			// System.out.print("Enter Account Number in Format->SNGURB-1:");
 			// String acno = sc1.nextLine();
+			for (int i = 0; i < myCustomerArrayList.size(); i++) {
+				if (myCustomerArrayList.get(i).isFlag()) {
+					if(acno.equals(myCustomerArrayList.get(i).getCustomerAccno())) {
 
-			System.out.print("Enter Name of AccountHolder:");
-			String name = sc1.nextLine();
-			System.out.print("Enter Date of Birth (dd-mm-yyyy):");
-			String dob = sc1.nextLine();
-			System.out.print("Enter Address of Account Holder:");
-			String address = sc1.nextLine();
-			System.out.print("Enter PAN of Account Holder:");
-			String pan = sc1.nextLine();
-			System.out.print("Enter AdharNumber of AccountHolder:");
-			String adhar = sc1.nextLine();
-			System.out.print("Enter Mobile Number:");
-			int mobNo = Integer.parseInt(sc1.nextLine().trim());
+						if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
+							System.out.print("Enter Name of AccountHolder:");
+							String name = sc1.nextLine();
+							System.out.print("Enter Date of Birth (dd-mm-yyyy):");
+							String dob = sc1.nextLine();
+							System.out.print("Enter Address of Account Holder:");
+							String address = sc1.nextLine();
+							System.out.print("Enter PAN of Account Holder:");
+							String pan = sc1.nextLine();
+							System.out.print("Enter AdharNumber of AccountHolder:");
+							String adhar = sc1.nextLine();
+							System.out.print("Enter Mobile Number:");
+							int mobNo = Integer.parseInt(sc1.nextLine().trim());
 
-			// System.out.println("Enter Money for opening account:");
-			// money = (Integer.parseInt(sc.nextLine().trim()));
-			Customer customer2 = updateAccountFromAccountNo(acno, name, dob, address, pan, adhar, mobNo);
-			System.out.println(customer2);
-			System.out.println("Account Update Successfully");
+							// System.out.println("Enter Money for opening
+							// account:");
+							// money = (Integer.parseInt(sc.nextLine().trim()));
+							Customer customer2 = updateAccountFromAccountNo(acno, name, dob, address, pan, adhar,
+									mobNo);
+							System.out.println(customer2);
+							System.out.println("Account Update Successfully");
+							 exit1=false;							
+						}
+					}
+				}
+			}
+			if(exit1){
+			System.out.println("Account Not Present in Database");
+			}
+			System.out.println("Do you want to continue?(1/0)");
+			String bl = sc1.nextLine();
+			while (bl.equals("1")) {
+				updateHandle();
+			}
 		} catch (Exception e) {
-			System.out.println("Enter String In Correct Format" + e);
+			System.out.println("Enter In Correct Format");
+			System.out.println("Do you want to continue?(1/0)");
+			String bl = sc1.nextLine();
+			while (bl.equals("1")) {
+				updateHandle();
+			}
 		}
 
 	}

@@ -15,6 +15,7 @@ public class VisitBank {
 		int choice = 0;
 		boolean isContinue = true;
 		System.out.println("************ Welcome To Chinmay Urban Bank *************");
+	try{
 		do {
 
 			System.out.println("--------------------------------------------------");
@@ -80,49 +81,51 @@ public class VisitBank {
 			// ch = sc.nextInt();
 			System.out.println("Continue...");
 		} while (isContinue);
-
+	}catch(Exception e){
+		System.out.println("Enter Correct input:");
+	}
 		sc.close();
-		// Customer firstCustomer = bk.getAccountFromAccountNumber("SNGURB-1");
-
-		// Customer customer = bk.getAccountFromAccountNumber("SNGURB-2");
-
-		// System.out.println(customer.getCustomerName());
-
-		// After executing this method, I should receive the customer object
-		// which contains updated information
-		// If I execute 'getAccountFromAccountNumber' method then I should
-		// receive the correct data
-		// update Account
-
-		// 1 Inheritance
-		// 2 Encapsulation
-		// 3 Polymorphism - overloading / overriding (tostring)
-		// 4 Abstraction
-
-		// Once the account delete method is executed, the account should be
-		// deleted from the bank
-		// Read account method based on account number should return null object
-		// (for deleted account)
-		// getAllCustomersInBank method should return only active accounts in
-		// bank
-
-		// Delete account
-		// boolean isAccountDeleted = bk.deleteAccountFromAccountNo("SNGURB-1");
-
-		// CRUD - Create Read Updated Delete
-
-		// Form fill up : Name, address, Adhar card etc.
-		// Open the account (create user account in bank) [Bank gives :
-		// Passbook, ATM card, Checkbook, netbacking -- AccountNumber]
-		// Edit the user profile (update user profile in bank)
-		// Deposit some money in account
-		// withdraw some money from account
-
-		// Open another account
-		// read account details
-
-		// Update first account's Adhar card
-
+	
 	}
 
 }
+	// Customer firstCustomer = bk.getAccountFromAccountNumber("SNGURB-1");
+
+			// Customer customer = bk.getAccountFromAccountNumber("SNGURB-2");
+
+			// System.out.println(customer.getCustomerName());
+
+			// After executing this method, I should receive the customer object
+			// which contains updated information
+			// If I execute 'getAccountFromAccountNumber' method then I should
+			// receive the correct data
+			// update Account
+
+			// 1 Inheritance
+			// 2 Encapsulation
+			// 3 Polymorphism - overloading / overriding (tostring)
+			// 4 Abstraction
+
+			// Once the account delete method is executed, the account should be
+			// deleted from the bank
+			// Read account method based on account number should return null object
+			// (for deleted account)
+			// getAllCustomersInBank method should return only active accounts in
+			// bank
+
+			// Delete account
+			// boolean isAccountDeleted = bk.deleteAccountFromAccountNo("SNGURB-1");
+
+			// CRUD - Create Read Updated Delete
+
+			// Form fill up : Name, address, Adhar card etc.
+			// Open the account (create user account in bank) [Bank gives :
+			// Passbook, ATM card, Checkbook, netbacking -- AccountNumber]
+			// Edit the user profile (update user profile in bank)
+			// Deposit some money in account
+			// withdraw some money from account
+
+			// Open another account
+			// read account details
+
+			// Update first account's Adhar card
