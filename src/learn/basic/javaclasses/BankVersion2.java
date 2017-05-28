@@ -167,24 +167,18 @@ public class BankVersion2 implements BankInterface1 {
 			String adhar, int mobNo) {
 		try {
 			for (int i = 0; i < myCustomerArrayList.size(); i++) {
-				if (myCustomerArrayList.get(i).isFlag()) {
-				if (acno.equals(myCustomerArrayList.get(i).getCustomerAccno())) {
-					
-						if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
-							Customer cust = myCustomerArrayList.get(i);
 
-							if (cust.getCustomerAccno().equals(acno)) {
-								cust.setCustomerAccno(acno);
-								cust.setCustomerName(name);
-								cust.setCustomerDOB(dob);
-								cust.setCustomerAddress(addes);
-								cust.setCustomerPAN(pan);
-								cust.setCustomerAdhar(adhar);
-								return cust;
+				Customer cust = myCustomerArrayList.get(i);
 
-							}
-						}
-					}
+				if (cust.getCustomerAccno().equals(acno)) {
+					cust.setCustomerAccno(acno);
+					cust.setCustomerName(name);
+					cust.setCustomerDOB(dob);
+					cust.setCustomerAddress(addes);
+					cust.setCustomerPAN(pan);
+					cust.setCustomerAdhar(adhar);
+					return cust;
+
 				}
 
 			}
@@ -361,7 +355,8 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void updateHandle() {
-		boolean exit1=true;
+		boolean exit1 = true;
+		String bl;
 		try {
 
 			String acno = getAcccountNumber();
@@ -369,7 +364,7 @@ public class BankVersion2 implements BankInterface1 {
 			// String acno = sc1.nextLine();
 			for (int i = 0; i < myCustomerArrayList.size(); i++) {
 				if (myCustomerArrayList.get(i).isFlag()) {
-					if(acno.equals(myCustomerArrayList.get(i).getCustomerAccno())) {
+					if (acno.equals(myCustomerArrayList.get(i).getCustomerAccno())) {
 
 						if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
 							System.out.print("Enter Name of AccountHolder:");
@@ -392,23 +387,23 @@ public class BankVersion2 implements BankInterface1 {
 									mobNo);
 							System.out.println(customer2);
 							System.out.println("Account Update Successfully");
-							 exit1=false;							
+							exit1 = false;
 						}
 					}
 				}
 			}
-			if(exit1){
-			System.out.println("Account Not Present in Database");
+			if (exit1) {
+				System.out.println("Account Not Present in Database");
 			}
 			System.out.println("Do you want to continue?(1/0)");
-			String bl = sc1.nextLine();
+			 bl = sc1.nextLine();
 			while (bl.equals("1")) {
 				updateHandle();
 			}
 		} catch (Exception e) {
 			System.out.println("Enter In Correct Format");
 			System.out.println("Do you want to continue?(1/0)");
-			String bl = sc1.nextLine();
+			 bl = sc1.nextLine();
 			while (bl.equals("1")) {
 				updateHandle();
 			}
