@@ -352,6 +352,43 @@ public class BankVersion2 implements BankInterface1 {
 		}
 
 	}
+	
+	
+	/*
+	 * 
+	 * boolean isContinue = findIfUserWantsToContinue();
+	 * 
+	 * while(isContinue){
+	 * Here you write the code to update the account
+	 * }
+	 * 
+	 * -------------------------------
+	 *  Method to get birthday, return String
+	 *  boolean isValid = true;
+	 *  String bday = null;
+	 *   while(isValid){
+	 *   bday = isValidBdayString();
+	 *   if (bday != null)
+	 *   	isValid = false;
+	 *   }
+	 *   return bday;
+	 *  --------------------
+	 * 
+	 * isValidBdayString(){
+	 *
+	 * Get the input string from scanner
+	 * User Regex and validate string
+	 * if correct then return String
+	 * otherwise return null
+	 * 
+	 *if user enters to exit
+	 *then return "exit" 
+	 *
+	 * }
+	 * 
+	 * What is the value of 'bday'?
+	 * any number...12312312312
+	 * */
 
 	@Override
 	public void updateHandle() {
@@ -359,17 +396,18 @@ public class BankVersion2 implements BankInterface1 {
 		String bl;
 		try {
 
-			String acno = getAcccountNumber();
+			String acno = getAcccountValidNumber();
 			// System.out.print("Enter Account Number in Format->SNGURB-1:");
 			// String acno = sc1.nextLine();
 			for (int i = 0; i < myCustomerArrayList.size(); i++) {
-				if (myCustomerArrayList.get(i).isFlag()) {
-					if (acno.equals(myCustomerArrayList.get(i).getCustomerAccno())) {
+				
+				// Check if the account number is valid and matches with the customer Number
+				if ((myCustomerArrayList.get(i).isFlag()) && (acno.equals(myCustomerArrayList.get(i).getCustomerAccno()))) {
 
-						if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
 							System.out.print("Enter Name of AccountHolder:");
 							String name = sc1.nextLine();
 							System.out.print("Enter Date of Birth (dd-mm-yyyy):");
+							
 							String dob = sc1.nextLine();
 							System.out.print("Enter Address of Account Holder:");
 							String address = sc1.nextLine();
@@ -388,8 +426,6 @@ public class BankVersion2 implements BankInterface1 {
 							System.out.println(customer2);
 							System.out.println("Account Update Successfully");
 							exit1 = false;
-						}
-					}
 				}
 			}
 			if (exit1) {
@@ -399,6 +435,7 @@ public class BankVersion2 implements BankInterface1 {
 			 bl = sc1.nextLine();
 			while (bl.equals("1")) {
 				updateHandle();
+				bl="0";
 			}
 		} catch (Exception e) {
 			System.out.println("Enter In Correct Format");
@@ -415,7 +452,7 @@ public class BankVersion2 implements BankInterface1 {
 	public void deleteHandle() {
 
 		try {
-			String accountNumber = getAcccountNumber();
+			String accountNumber = getAcccountValidNumber();
 			deleteAccount(accountNumber);
 
 		} catch (Exception e) {
@@ -430,7 +467,7 @@ public class BankVersion2 implements BankInterface1 {
 		// System.out.print("Enter Account Number to be Printed in
 		// Format->SNGURB-1:");
 		// String acno = sc1.nextLine();
-		String acno = getAcccountNumber();
+		String acno = getAcccountValidNumber();
 		printOneAcc(acno);
 
 	}
@@ -485,7 +522,7 @@ public class BankVersion2 implements BankInterface1 {
 	}
 
 	@Override
-	public String getAcccountNumber() {
+	public String getAcccountValidNumber() {
 		try {
 			System.out.println("Enter account Number to be Printed in Format->SNGURB-1");
 			String acno = sc1.nextLine();
@@ -494,11 +531,11 @@ public class BankVersion2 implements BankInterface1 {
 				return acno;
 			} else {
 				System.out.println("TRY AGAIN:");
-				return getAcccountNumber();
+				return getAcccountValidNumber();
 			}
 		} catch (Exception e) {
 			System.out.println("Try again");
-			return getAcccountNumber();
+			return getAcccountValidNumber();
 		}
 	}
 
