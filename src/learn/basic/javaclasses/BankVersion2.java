@@ -25,7 +25,9 @@ import java.util.regex.Pattern;
 public class BankVersion2 implements BankInterface1 {
 	Scanner sc1 = new Scanner(System.in);
 	String name1 = null;
+	boolean ready;
 	int b2;
+
 	public BankVersion2() {
 
 		// This is the place from where you will execute read file method
@@ -413,9 +415,9 @@ public class BankVersion2 implements BankInterface1 {
 
 					String name2 = getName();
 					if (name2.equals(null)) {
-						getName();
-					}else{
-						 name=name2;
+						bl=0;
+					} else {
+						name = name2;
 					}
 
 					System.out.print("Enter Date of Birth (dd-mm-yyyy):");
@@ -444,7 +446,7 @@ public class BankVersion2 implements BankInterface1 {
 			if (exit1) {
 				System.out.println("Account Not Present in Database");
 			}
-			System.out.println("Do you want to continue?(1/0)");
+			System.out.println("Do you want to continue Update Acount?(1/0)");
 			bl = Integer.parseInt(sc1.nextLine().trim());
 			while (bl == 1) {
 				updateHandle();
@@ -452,7 +454,7 @@ public class BankVersion2 implements BankInterface1 {
 			}
 		} catch (Exception e) {
 			System.out.println("Enter In Correct Format");
-			System.out.println("Do you want to continue?(1/0)");
+			System.out.println("Do you want to continue Update Acount?(1/0)");
 			bl = Integer.parseInt(sc1.nextLine().trim());
 
 			while (bl == 1) {
@@ -611,29 +613,37 @@ public class BankVersion2 implements BankInterface1 {
 	}
 
 	public String getNameHandle() {
-		while (!name1.equals("exit")) {
-			getName();
-		}
-		return null;
+		// !name1.equals("exit")
+
+		String name = name1;
+		ready = false;
+		b2 = 0;
+		return name;
+
 	}
 
 	public String getName() {
-		
-		System.out.print("Enter Name of AccountHolder:");
+String name4 = null;
+		System.out.print("Enter Name of AccountHolder:(or exit)");
 		name1 = sc1.nextLine().trim();
-		boolean ready = Pattern.matches("[a-z A-Z]*", name1);
+		ready = Pattern.matches("[a-z A-Z]*", name1);
 		if (ready) {
-			String name = name1;
-			return name;
+			if (name1.equals("exit")) {
+				ready = false;
+				b2 = 0;
+				return null;
+			} else {
+				name4=getNameHandle();
+			}
 		} else {
 			System.out.println("Do you want to continue(1/0)?");
 			b2 = sc1.nextInt();
 			while (b2 == 1) {
-				getNameHandle();
-				b2 = 0;
+				getName();
+				b2=0;
 			}
 		}
-		return null;
+		return name4;
 	}
 
 	public String getMobNo() {
