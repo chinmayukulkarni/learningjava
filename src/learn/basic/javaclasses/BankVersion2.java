@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 /**
  * This class will implement arraylist instead of Array This class will
@@ -23,7 +24,8 @@ import java.util.StringTokenizer;
 
 public class BankVersion2 implements BankInterface1 {
 	Scanner sc1 = new Scanner(System.in);
-
+	String name1 = null;
+	int b2;
 	public BankVersion2() {
 
 		// This is the place from where you will execute read file method
@@ -86,9 +88,9 @@ public class BankVersion2 implements BankInterface1 {
 				cust.setCustomerDOB(st.nextToken());
 				cust.setCustomerAddress(st.nextToken());
 				cust.setCustomerPAN(st.nextToken());
-				cust.setCustomerAdhar(st.nextToken());
+				cust.setCustomerAdhar(Integer.parseInt(st.nextToken().trim()));
 				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
-				cust.setMobNo(Integer.parseInt(st.nextToken().trim()));
+				cust.setMobNo(st.nextToken().trim());
 			}
 			myCustomerArrayList.add(cust);
 
@@ -101,8 +103,8 @@ public class BankVersion2 implements BankInterface1 {
 		// System.out.println(customerCounter);
 	}
 
-	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money,
-			int mobNo) throws IOException {
+	public String createAccountInBank(String name, String dob, String addes, String pan, int adhar, int money,
+			String mobNo) throws IOException {
 
 		String customerAccountNumber = "SNGURB-" + (customerCounter);
 
@@ -138,6 +140,22 @@ public class BankVersion2 implements BankInterface1 {
 	}
 
 	public void printAll() {
+		/**
+		 * public void displayStudents (){ System.out.println
+		 * ("\n-----------------------------"); System.out.println (
+		 * "Email System - Display Students"); System.out.println
+		 * ("-----------------------------");
+		 * System.out.format("%10s%15d%15s%15s%20s", "Grade", "Last Name",
+		 * "First Name", "Student Number", "Parent Email");
+		 * 
+		 * StudentNode current = top; while (current != null){ Student read =
+		 * current.getStudentNode(); System.out.format ("%10s%15d%15s%15s%20s",
+		 * ""+read.getClass(), read.getLastName(), read.getFirstName(),
+		 * ""+read.getStudentNum(), read.getParentEmail()); //This will output
+		 * with a set number of character spaces per field, giving the list a
+		 * table-like quality } }//End of displayStudents
+		 */
+
 		System.out.format("%15s%15s%15s%25s%17s%17s%15s", "Name", "Account no", "DOB", "Address", "Pan", "Adhar",
 				"Mob no");
 		System.out.println(" ");
@@ -146,11 +164,10 @@ public class BankVersion2 implements BankInterface1 {
 			boolean isValid = myCustomerArrayList.get(i).isFlag();
 			if (isValid) {
 
-				System.out.format("%15s%15s%15s%25s%17s%17s%15s", "" + myCustomerArrayList.get(i).getCustomerName(),
+				System.out.format("%15s%15s%15s%25s%17s%17s%15s", myCustomerArrayList.get(i).getCustomerName(),
 						myCustomerArrayList.get(i).getCustomerAccno(), myCustomerArrayList.get(i).getCustomerDOB(),
-						"" + myCustomerArrayList.get(i).getCustomerAddress(),
-						myCustomerArrayList.get(i).getCustomerPAN(), myCustomerArrayList.get(i).getCustomerAdhar(),
-						myCustomerArrayList.get(i).getMobNo());
+						myCustomerArrayList.get(i).getCustomerAddress(), myCustomerArrayList.get(i).getCustomerPAN(),
+						myCustomerArrayList.get(i).getCustomerAdhar(), myCustomerArrayList.get(i).getMobNo());
 				System.out.println("\n---------------------------------------------------");
 			}
 		}
@@ -164,7 +181,7 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public Customer updateAccountFromAccountNo(String acno, String name, String addes, String dob, String pan,
-			String adhar, int mobNo) {
+			int adhar, String mobNo) {
 		try {
 			for (int i = 0; i < myCustomerArrayList.size(); i++) {
 
@@ -263,13 +280,8 @@ public class BankVersion2 implements BankInterface1 {
 				System.out.println("Balance:" + cust.getMoney());
 				System.out.println(cust.isFlag());
 				System.out.println("Single Account Printed Successfully");
-			} else {
-				System.out.println("You Have Entered Wrong Account No");
-				System.out.println("Please Enter Correct Account Number");
-				printOneHandle();
 			}
 		}
-
 	}
 
 	@Override
@@ -298,7 +310,7 @@ public class BankVersion2 implements BankInterface1 {
 				cust.setCustomerDOB(st.nextToken().trim());
 				cust.setCustomerAddress(st.nextToken().trim());
 				cust.setCustomerPAN(st.nextToken().trim());
-				cust.setCustomerAdhar(st.nextToken().trim());
+				cust.setCustomerAdhar(Integer.parseInt(st.nextToken().trim()));
 				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
 
 				if (st.nextToken().trim().equals("true")) {
@@ -307,7 +319,7 @@ public class BankVersion2 implements BankInterface1 {
 					cust.setFlag(false);
 				}
 
-				cust.setMobNo(Integer.parseInt(st.nextToken().trim()));
+				cust.setMobNo(st.nextToken().trim());
 			}
 			myCustomerArrayList.add(cust);
 
@@ -336,10 +348,10 @@ public class BankVersion2 implements BankInterface1 {
 		String pan = sc1.nextLine();
 
 		System.out.print("Enter AdharNumber of AccountHolder:");
-		String adhar = sc1.nextLine();
+		int adhar = Integer.parseInt(sc1.nextLine().trim());
 
 		System.out.print("Enter Mobile Number:");
-		int mobNo = Integer.parseInt(sc1.nextLine().trim());
+		String mobNo = sc1.nextLine().trim();
 
 		System.out.print("Enter Money for opening account:");
 		try {
@@ -352,96 +364,98 @@ public class BankVersion2 implements BankInterface1 {
 		}
 
 	}
-	
-	
+
 	/*
 	 * 
 	 * boolean isContinue = findIfUserWantsToContinue();
 	 * 
-	 * while(isContinue){
-	 * Here you write the code to update the account
-	 * }
+	 * while(isContinue){ Here you write the code to update the account }
 	 * 
-	 * -------------------------------
-	 *  Method to get birthday, return String
-	 *  boolean isValid = true;
-	 *  String bday = null;
-	 *   while(isValid){
-	 *   bday = isValidBdayString();
-	 *   if (bday != null)
-	 *   	isValid = false;
-	 *   }
-	 *   return bday;
-	 *  --------------------
+	 * ------------------------------- Method to get birthday, return String
+	 * boolean isValid = true; String bday = null; while(isValid){ bday =
+	 * isValidBdayString(); if (bday != null) isValid = false; } return bday;
+	 * --------------------
 	 * 
 	 * isValidBdayString(){
 	 *
-	 * Get the input string from scanner
-	 * User Regex and validate string
-	 * if correct then return String
-	 * otherwise return null
+	 * Get the input string from scanner User Regex and validate string if
+	 * correct then return String otherwise return null
 	 * 
-	 *if user enters to exit
-	 *then return "exit" 
+	 * if user enters to exit then return "exit"
 	 *
 	 * }
 	 * 
-	 * What is the value of 'bday'?
-	 * any number...12312312312
-	 * */
+	 * What is the value of 'bday'? any number...12312312312
+	 * System.out.println(Pattern.matches(".s", "as"));//true (2nd char is s)
+	 * 
+	 * System.out.println(Pattern.matches("[a-z]*+@gmail.com",
+	 * "chinmay@gmail.com"));
+	 * 
+	 * System.out.println(Pattern.matches("[a-z A-Z]*", "Chinmay Kulkanrni"));
+	 */
 
 	@Override
 	public void updateHandle() {
 		boolean exit1 = true;
-		String bl;
+		String name = null;
+		int bl;
 		try {
 
 			String acno = getAcccountValidNumber();
 			// System.out.print("Enter Account Number in Format->SNGURB-1:");
 			// String acno = sc1.nextLine();
 			for (int i = 0; i < myCustomerArrayList.size(); i++) {
-				
-				// Check if the account number is valid and matches with the customer Number
-				if ((myCustomerArrayList.get(i).isFlag()) && (acno.equals(myCustomerArrayList.get(i).getCustomerAccno()))) {
 
-							System.out.print("Enter Name of AccountHolder:");
-							String name = sc1.nextLine();
-							System.out.print("Enter Date of Birth (dd-mm-yyyy):");
-							
-							String dob = sc1.nextLine();
-							System.out.print("Enter Address of Account Holder:");
-							String address = sc1.nextLine();
-							System.out.print("Enter PAN of Account Holder:");
-							String pan = sc1.nextLine();
-							System.out.print("Enter AdharNumber of AccountHolder:");
-							String adhar = sc1.nextLine();
-							System.out.print("Enter Mobile Number:");
-							int mobNo = Integer.parseInt(sc1.nextLine().trim());
+				// Check if the account number is valid and matches with the
+				// customer Number
+				if ((myCustomerArrayList.get(i).isFlag())
+						&& (acno.equals(myCustomerArrayList.get(i).getCustomerAccno()))) {
 
-							// System.out.println("Enter Money for opening
-							// account:");
-							// money = (Integer.parseInt(sc.nextLine().trim()));
-							Customer customer2 = updateAccountFromAccountNo(acno, name, dob, address, pan, adhar,
-									mobNo);
-							System.out.println(customer2);
-							System.out.println("Account Update Successfully");
-							exit1 = false;
+					String name2 = getName();
+					if (name2.equals(null)) {
+						getName();
+					}else{
+						 name=name2;
+					}
+
+					System.out.print("Enter Date of Birth (dd-mm-yyyy):");
+					String dob = sc1.nextLine();
+
+					System.out.print("Enter Address of Account Holder:");
+					String address = sc1.nextLine();
+
+					System.out.print("Enter PAN of Account Holder:");
+					String pan = sc1.nextLine();
+
+					System.out.print("Enter AdharNumber of AccountHolder:");
+					int adhar = getAdhar();
+
+					System.out.print("Enter Mobile Number:");
+					String mobNo = getMobNo();
+					// System.out.println("Enter Money for opening
+					// account:");
+					// money = (Integer.parseInt(sc.nextLine().trim()));
+					Customer customer2 = updateAccountFromAccountNo(acno, name, dob, address, pan, adhar, mobNo);
+					System.out.println(customer2);
+					System.out.println("Account Update Successfully");
+					exit1 = false;
 				}
 			}
 			if (exit1) {
 				System.out.println("Account Not Present in Database");
 			}
 			System.out.println("Do you want to continue?(1/0)");
-			 bl = sc1.nextLine();
-			while (bl.equals("1")) {
+			bl = Integer.parseInt(sc1.nextLine().trim());
+			while (bl == 1) {
 				updateHandle();
-				bl="0";
+				bl = 0;
 			}
 		} catch (Exception e) {
 			System.out.println("Enter In Correct Format");
 			System.out.println("Do you want to continue?(1/0)");
-			 bl = sc1.nextLine();
-			while (bl.equals("1")) {
+			bl = Integer.parseInt(sc1.nextLine().trim());
+
+			while (bl == 1) {
 				updateHandle();
 			}
 		}
@@ -464,11 +478,43 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public void printOneHandle() {
-		// System.out.print("Enter Account Number to be Printed in
-		// Format->SNGURB-1:");
-		// String acno = sc1.nextLine();
-		String acno = getAcccountValidNumber();
-		printOneAcc(acno);
+
+		boolean exit2 = true;
+		int b1;
+		try {
+
+			String acno = getAcccountValidNumber();
+
+			for (int i = 0; i < myCustomerArrayList.size(); i++) {
+
+				// Check if the account number is valid and matches with the
+				// customer Number
+				if ((myCustomerArrayList.get(i).isFlag())
+						&& (acno.equals(myCustomerArrayList.get(i).getCustomerAccno()))) {
+
+					printOneAcc(acno);
+
+					exit2 = false;
+				}
+			}
+			if (exit2) {
+				System.out.println("Account Not Present in Database");
+			}
+			System.out.println("Do you want to continue?(1/0)");
+			b1 = Integer.parseInt(sc1.nextLine().trim());
+			while (b1 == 1) {
+				printOneHandle();
+				b1 = 0;
+			}
+		} catch (Exception e) {
+			System.out.println("Enter In Correct Format");
+			System.out.println("Do you want to continue?(1/0)");
+			b1 = Integer.parseInt(sc1.nextLine().trim());
+
+			while (b1 == 1) {
+				printOneHandle();
+			}
+		}
 
 	}
 
@@ -562,5 +608,50 @@ public class BankVersion2 implements BankInterface1 {
 			deleteHandle();
 		}
 		return null;
+	}
+
+	public String getNameHandle() {
+		while (!name1.equals("exit")) {
+			getName();
+		}
+		return null;
+	}
+
+	public String getName() {
+		
+		System.out.print("Enter Name of AccountHolder:");
+		name1 = sc1.nextLine().trim();
+		boolean ready = Pattern.matches("[a-z A-Z]*", name1);
+		if (ready) {
+			String name = name1;
+			return name;
+		} else {
+			System.out.println("Do you want to continue(1/0)?");
+			b2 = sc1.nextInt();
+			while (b2 == 1) {
+				getNameHandle();
+				b2 = 0;
+			}
+		}
+		return null;
+	}
+
+	public String getMobNo() {
+		String mobNo1 = sc1.nextLine().trim();
+		boolean ready2 = Pattern.matches("^[1-9][0-9]{9}", mobNo1);
+		if (ready2) {
+			String mobNo = mobNo1;
+			return mobNo;
+		}
+		return null;
+	}
+
+	public int getAdhar() {
+		boolean ready2 = Pattern.matches("^[1-9][0-9]{9}", sc1.nextLine().trim());
+		if (ready2) {
+			int adhar = Integer.parseInt(sc1.nextLine().trim());
+			return adhar;
+		}
+		return 0;
 	}
 }

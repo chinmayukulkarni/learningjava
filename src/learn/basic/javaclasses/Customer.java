@@ -6,9 +6,9 @@ public class Customer {
 	String customerDOB;
 	String customerAddress;
 	String customerPAN;
-	String customerAdhar;
+	int customerAdhar;
 	int money;
-	int mobNo;
+	String mobNo;
 	boolean flag;
 
 	public boolean isFlag() {
@@ -19,11 +19,11 @@ public class Customer {
 		this.flag = flag;
 	}
 
-	public int getMobNo() {
+	public String getMobNo() {
 		return mobNo;
 	}
 
-	public void setMobNo(int mobNo) {
+	public void setMobNo(String mobNo) {
 		this.mobNo = mobNo;
 	}
 
@@ -67,13 +67,7 @@ public class Customer {
 		this.customerPAN = customerPAN;
 	}
 
-	public String getCustomerAdhar() {
-		return customerAdhar;
-	}
-
-	public void setCustomerAdhar(String customerAdhar) {
-		this.customerAdhar = customerAdhar;
-	}
+	
 
 	public int getMoney() {
 		return money;
@@ -81,6 +75,14 @@ public class Customer {
 
 	public void setMoney(int money) {
 		this.money = money;
+	}
+
+	public int getCustomerAdhar() {
+		return customerAdhar;
+	}
+
+	public void setCustomerAdhar(int customerAdhar) {
+		this.customerAdhar = customerAdhar;
 	}
 
 	@Override
