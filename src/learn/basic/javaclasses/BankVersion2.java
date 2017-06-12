@@ -90,7 +90,7 @@ public class BankVersion2 implements BankInterface1 {
 				cust.setCustomerDOB(st.nextToken());
 				cust.setCustomerAddress(st.nextToken());
 				cust.setCustomerPAN(st.nextToken());
-				cust.setCustomerAdhar(Integer.parseInt(st.nextToken().trim()));
+				cust.setCustomerAdhar(st.nextToken().trim());
 				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
 				cust.setMobNo(st.nextToken().trim());
 			}
@@ -105,7 +105,7 @@ public class BankVersion2 implements BankInterface1 {
 		// System.out.println(customerCounter);
 	}
 
-	public String createAccountInBank(String name, String dob, String addes, String pan, int adhar, int money,
+	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money,
 			String mobNo) throws IOException {
 
 		String customerAccountNumber = "SNGURB-" + (customerCounter);
@@ -183,7 +183,7 @@ public class BankVersion2 implements BankInterface1 {
 
 	@Override
 	public Customer updateAccountFromAccountNo(String acno, String name, String addes, String dob, String pan,
-			int adhar, String mobNo) {
+			String adhar, String mobNo) {
 		try {
 			for (int i = 0; i < myCustomerArrayList.size(); i++) {
 
@@ -196,6 +196,7 @@ public class BankVersion2 implements BankInterface1 {
 					cust.setCustomerAddress(addes);
 					cust.setCustomerPAN(pan);
 					cust.setCustomerAdhar(adhar);
+					cust.setMobNo(mobNo);
 					return cust;
 
 				}
@@ -312,7 +313,7 @@ public class BankVersion2 implements BankInterface1 {
 				cust.setCustomerDOB(st.nextToken().trim());
 				cust.setCustomerAddress(st.nextToken().trim());
 				cust.setCustomerPAN(st.nextToken().trim());
-				cust.setCustomerAdhar(Integer.parseInt(st.nextToken().trim()));
+				cust.setCustomerAdhar(st.nextToken().trim());
 				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
 
 				if (st.nextToken().trim().equals("true")) {
@@ -350,7 +351,7 @@ public class BankVersion2 implements BankInterface1 {
 		String pan = sc1.nextLine();
 
 		System.out.print("Enter AdharNumber of AccountHolder:");
-		int adhar = Integer.parseInt(sc1.nextLine().trim());
+		String adhar = sc1.nextLine().trim();
 
 		System.out.print("Enter Mobile Number:");
 		String mobNo = sc1.nextLine().trim();
@@ -399,12 +400,14 @@ public class BankVersion2 implements BankInterface1 {
 	@Override
 	public void updateHandle() {
 		boolean exit1 = true;
+		boolean exit2 = true;
 		String name = null;
 		int bl;
 		try {
-
+			// if (exit2) {
 			String acno = getAcccountValidNumber();
-			// System.out.print("Enter Account Number in Format->SNGURB-1:");
+			// System.out.print("Enter Account Number in
+			// Format->SNGURB-1:");
 			// String acno = sc1.nextLine();
 			for (int i = 0; i < myCustomerArrayList.size(); i++) {
 
@@ -414,10 +417,10 @@ public class BankVersion2 implements BankInterface1 {
 						&& (acno.equals(myCustomerArrayList.get(i).getCustomerAccno()))) {
 
 					String name2 = getName();
-					if (name2.equals(null)) {
-						bl=0;
-					} else {
-						name = name2;
+					System.out.println("Valid String is: " + name2);
+
+					if (name2.equals("exit")) {
+						break;
 					}
 
 					System.out.print("Enter Date of Birth (dd-mm-yyyy):");
@@ -430,10 +433,17 @@ public class BankVersion2 implements BankInterface1 {
 					String pan = sc1.nextLine();
 
 					System.out.print("Enter AdharNumber of AccountHolder:");
-					int adhar = getAdhar();
-
+					String adhar = getAdhar();
+					if (adhar.equals("exit")) {
+						exit1 = false;
+						break;
+					}
 					System.out.print("Enter Mobile Number:");
 					String mobNo = getMobNo();
+					if (mobNo.equals("exit")) {
+						exit1 = false;
+						break;
+					}
 					// System.out.println("Enter Money for opening
 					// account:");
 					// money = (Integer.parseInt(sc.nextLine().trim()));
@@ -446,20 +456,26 @@ public class BankVersion2 implements BankInterface1 {
 			if (exit1) {
 				System.out.println("Account Not Present in Database");
 			}
-			System.out.println("Do you want to continue Update Acount?(1/0)");
-			bl = Integer.parseInt(sc1.nextLine().trim());
-			while (bl == 1) {
-				updateHandle();
-				bl = 0;
-			}
+			// System.out.println("Do you want to continue Update
+			// Acount?(1/0)");
+			// bl = Integer.parseInt(sc1.nextLine().trim());
+			// while (bl == 1) {
+			// updateHandle();
+			// bl = 0;
+			// }
+			// }
 		} catch (Exception e) {
-			System.out.println("Enter In Correct Format");
-			System.out.println("Do you want to continue Update Acount?(1/0)");
-			bl = Integer.parseInt(sc1.nextLine().trim());
 
-			while (bl == 1) {
-				updateHandle();
-			}
+			e.printStackTrace();
+			// System.out.println("Enter In Correct Format");
+			// System.out.println("Do you want to continue Update
+			// Acount?(1/0)");
+			// bl = Integer.parseInt(sc1.nextLine().trim());
+			//
+			// while (bl == 1) {
+			// updateHandle();
+			// bl = 0;
+			// }
 		}
 
 	}
@@ -616,52 +632,95 @@ public class BankVersion2 implements BankInterface1 {
 		// !name1.equals("exit")
 
 		String name = name1;
-		ready = false;
-		b2 = 0;
+		// ready = false;
+		// b2 = 0;
 		return name;
 
 	}
 
-	public String getName() {
-String name4 = null;
+	/**
+	 * This method will either return a valid name or null
+	 * 
+	 * @return
+	 */
+	public String getValidName() {
+
 		System.out.print("Enter Name of AccountHolder:(or exit)");
-		name1 = sc1.nextLine().trim();
-		ready = Pattern.matches("[a-z A-Z]*", name1);
+		String name1 = sc1.nextLine().trim();
+		boolean ready = Pattern.matches("[a-z A-Z]*", name1);
+
 		if (ready) {
-			if (name1.equals("exit")) {
-				ready = false;
-				b2 = 0;
-				return null;
-			} else {
-				name4=getNameHandle();
-			}
-		} else {
-			System.out.println("Do you want to continue(1/0)?");
-			b2 = sc1.nextInt();
-			while (b2 == 1) {
-				getName();
-				b2=0;
-			}
+
+			return name1;
+		} else
+			return null;
+
+	}
+
+	public String getName() {
+
+		String returnedString = getValidName();
+		while (returnedString == null) {
+			System.out.println("The entered value is not correct.");
+			returnedString = getValidName();
 		}
-		return name4;
+		return returnedString;
+	}
+
+	/*
+	 * public String getName() { boolean ready5 = true; if (ready5) { String
+	 * name4 = null; System.out.print("Enter Name of AccountHolder:(or exit)");
+	 * name1 = sc1.nextLine().trim(); ready = Pattern.matches("[a-z A-Z]*",
+	 * name1); if (ready) { if (name1.equals("exit")) { ready = false; b2 = 0;
+	 * return null; } else { name4 = getNameHandle(); } } else {
+	 * System.out.println("Do you want to continue(1/0)?"); b2 = sc1.nextInt();
+	 * while (b2 == 1) { getName(); b2 = 0; } } } return name4; }
+	 */
+	/**
+	 * This method returns a mobile number if user input is a valid string,
+	 * otherwise it returns null.
+	 * 
+	 * @return
+	 */
+	public String getValidMobileNo() {
+
+		String mobileNumber = sc1.nextLine().trim();
+		boolean isValidMobNo = Pattern.matches("^[1-9][0-9]{9}", mobileNumber);
+		if (isValidMobNo) {
+			return mobileNumber;
+		} else if (mobileNumber.equals("exit")) {
+			return "exit";
+		} else
+			return null;
 	}
 
 	public String getMobNo() {
-		String mobNo1 = sc1.nextLine().trim();
-		boolean ready2 = Pattern.matches("^[1-9][0-9]{9}", mobNo1);
-		if (ready2) {
-			String mobNo = mobNo1;
-			return mobNo;
+		String phoneNo = getValidMobileNo();
+		while (phoneNo == null) {
+			System.out.println("Enter correct Mobile no:or exit to return:");
+			phoneNo = getValidMobileNo();
 		}
+		return phoneNo;
+	}
+
+	public String getValidAdhar() {
+		String adhar = sc1.nextLine().trim();
+		boolean ready2 = Pattern.matches("^[1-9][0-9]{15}", adhar);
+		if (ready2) {
+			return adhar;
+		}else if (adhar.equals("exit")) {
+			return "exit";
+		} else
 		return null;
 	}
 
-	public int getAdhar() {
-		boolean ready2 = Pattern.matches("^[1-9][0-9]{9}", sc1.nextLine().trim());
-		if (ready2) {
-			int adhar = Integer.parseInt(sc1.nextLine().trim());
-			return adhar;
+	public String getAdhar() {
+		String adhar = getValidAdhar();
+		while (adhar == null) {
+			System.out.println("Enter correct Adhar number or exit to return:");
+			adhar = getValidAdhar();
 		}
-		return 0;
+		return adhar;
 	}
+
 }

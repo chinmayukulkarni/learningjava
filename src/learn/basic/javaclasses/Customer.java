@@ -6,7 +6,7 @@ public class Customer {
 	String customerDOB;
 	String customerAddress;
 	String customerPAN;
-	int customerAdhar;
+	String customerAdhar;
 	int money;
 	String mobNo;
 	boolean flag;
@@ -77,11 +77,11 @@ public class Customer {
 		this.money = money;
 	}
 
-	public int getCustomerAdhar() {
+	public String getCustomerAdhar() {
 		return customerAdhar;
 	}
 
-	public void setCustomerAdhar(int customerAdhar) {
+	public void setCustomerAdhar(String customerAdhar) {
 		this.customerAdhar = customerAdhar;
 	}
 
