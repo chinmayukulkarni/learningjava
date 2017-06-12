@@ -428,7 +428,10 @@ public class BankVersion2 implements BankInterface1 {
 
 					System.out.print("Enter Address of Account Holder:");
 					String address = sc1.nextLine();
-
+					if (address.equals("exit")) {
+						exit1 = false;
+						break;
+					}
 					System.out.print("Enter PAN of Account Holder:");
 					String pan = sc1.nextLine();
 
