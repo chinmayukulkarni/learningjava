@@ -158,7 +158,7 @@ public class BankVersion2 implements BankInterface1 {
 		 * table-like quality } }//End of displayStudents
 		 */
 
-		System.out.format("%15s%15s%15s%25s%17s%17s%15s", "Name", "Account no", "DOB", "Address", "Pan", "Adhar",
+		System.out.format("%-15s%-15s%-15s%-25s%-17s%-17s%-15s", "Name", "Account no", "DOB", "Address", "Pan", "Adhar",
 				"Mob no");
 		System.out.println(" ");
 
@@ -166,11 +166,11 @@ public class BankVersion2 implements BankInterface1 {
 			boolean isValid = myCustomerArrayList.get(i).isFlag();
 			if (isValid) {
 
-				System.out.format("%15s%15s%15s%25s%17s%17s%15s", myCustomerArrayList.get(i).getCustomerName(),
+				System.out.format("%-15s%-15s%-15s%-25s%-17s%-17s%-15s", myCustomerArrayList.get(i).getCustomerName(),
 						myCustomerArrayList.get(i).getCustomerAccno(), myCustomerArrayList.get(i).getCustomerDOB(),
 						myCustomerArrayList.get(i).getCustomerAddress(), myCustomerArrayList.get(i).getCustomerPAN(),
 						myCustomerArrayList.get(i).getCustomerAdhar(), myCustomerArrayList.get(i).getMobNo());
-				System.out.println("\n---------------------------------------------------");
+				System.out.println("\n--------------------------------------------------------------------------------------------------------------------");
 			}
 		}
 	}
