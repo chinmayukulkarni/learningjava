@@ -423,8 +423,8 @@ public class BankVersion2 implements BankInterface1 {
 						break;
 					}
 
-					System.out.print("Enter Date of Birth (dd-mm-yyyy):");
-					String dob = sc1.nextLine();
+					System.out.print("Enter Date of Birth (yyyy-MM-dd):");
+					String dob = getDate();
 
 					System.out.print("Enter Address of Account Holder:");
 					String address = sc1.nextLine();
@@ -725,5 +725,21 @@ public class BankVersion2 implements BankInterface1 {
 		}
 		return adhar;
 	}
+	
+	public String getValidDate(){
+		 String date = sc1.nextLine().trim();
+		boolean isVslidDate= Pattern.matches("\\d{4}-[01]\\d-[0-3]\\d",date);
+		if(isVslidDate){
+			return date;
+		}else
+		return null;
+	}
+public String getDate(){
+	String date = getValidDate();
+	while(date==null){
+		 date = getValidDate();
+	}
+			return date;
+}
 
 }
