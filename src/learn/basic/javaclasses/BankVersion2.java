@@ -341,8 +341,11 @@ public class BankVersion2 implements BankInterface1 {
 
 		System.out.print("Enter Name of AccountHolder:");
 		String name = sc1.nextLine();
-
-		System.out.print("Enter Date of Birth (dd-mm-yyyy):");
+//		if (name.equals("exit")) {
+//			break;
+//		}
+		
+		System.out.print("Enter Date of Birth (yyyy-MM-dd):");
 		String dob = sc1.nextLine();
 
 		System.out.print("Enter Address of Account Holder:");
@@ -400,7 +403,7 @@ public class BankVersion2 implements BankInterface1 {
 	@Override
 	public void updateHandle() {
 		boolean exit1 = true;
-		boolean exit2 = true;
+		
 		String name = null;
 		int bl;
 		try {
@@ -417,7 +420,7 @@ public class BankVersion2 implements BankInterface1 {
 						&& (acno.equals(myCustomerArrayList.get(i).getCustomerAccno()))) {
 
 					String name2 = getName();
-					System.out.println("Valid String is: " + name2);
+					//System.out.println("Valid String is: " + name2);
 
 					if (name2.equals("exit")) {
 						break;
@@ -435,13 +438,13 @@ public class BankVersion2 implements BankInterface1 {
 					System.out.print("Enter PAN of Account Holder:");
 					String pan = sc1.nextLine();
 
-					System.out.print("Enter AdharNumber of AccountHolder:");
+					System.out.print("Enter 16 Digit AdharNumber of AccountHolder:");
 					String adhar = getAdhar();
 					if (adhar.equals("exit")) {
 						exit1 = false;
 						break;
 					}
-					System.out.print("Enter Mobile Number:");
+					System.out.print("Enter 10 Digit Mobile Number:");
 					String mobNo = getMobNo();
 					if (mobNo.equals("exit")) {
 						exit1 = false;
@@ -664,7 +667,7 @@ public class BankVersion2 implements BankInterface1 {
 
 		String returnedString = getValidName();
 		while (returnedString == null) {
-			System.out.println("The entered value is not correct.");
+			System.out.println("Name should not contain any numbers And Special Characters");
 			returnedString = getValidName();
 		}
 		return returnedString;
@@ -700,7 +703,7 @@ public class BankVersion2 implements BankInterface1 {
 	public String getMobNo() {
 		String phoneNo = getValidMobileNo();
 		while (phoneNo == null) {
-			System.out.println("Enter correct Mobile no:or exit to return:");
+			System.out.println("Enter correct Mobile no or exit to return:");
 			phoneNo = getValidMobileNo();
 		}
 		return phoneNo;
@@ -737,6 +740,7 @@ public class BankVersion2 implements BankInterface1 {
 public String getDate(){
 	String date = getValidDate();
 	while(date==null){
+		System.out.println("Enter Valid Date in yyyy-MM-dd Format");
 		 date = getValidDate();
 	}
 			return date;
