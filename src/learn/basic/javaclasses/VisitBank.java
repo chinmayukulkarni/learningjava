@@ -34,7 +34,7 @@ public class VisitBank {
 			switch (choice) {
 
 			case 1:// create account
-				bk.createHaandle();
+				bk.createHandle();
 				break;
 
 			case 2:// update account

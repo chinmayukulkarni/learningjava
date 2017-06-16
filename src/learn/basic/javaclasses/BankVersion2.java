@@ -170,7 +170,8 @@ public class BankVersion2 implements BankInterface1 {
 						myCustomerArrayList.get(i).getCustomerAccno(), myCustomerArrayList.get(i).getCustomerDOB(),
 						myCustomerArrayList.get(i).getCustomerAddress(), myCustomerArrayList.get(i).getCustomerPAN(),
 						myCustomerArrayList.get(i).getCustomerAdhar(), myCustomerArrayList.get(i).getMobNo());
-				System.out.println("\n--------------------------------------------------------------------------------------------------------------------");
+				System.out.println(
+						"\n--------------------------------------------------------------------------------------------------------------------");
 			}
 		}
 	}
@@ -337,28 +338,36 @@ public class BankVersion2 implements BankInterface1 {
 	}
 
 	@Override
-	public void createHaandle() throws IOException {
+	public void createHandle() throws IOException {
 
-		System.out.print("Enter Name of AccountHolder:");
-		String name = sc1.nextLine();
-//		if (name.equals("exit")) {
-//			break;
-//		}
+//		System.out.print("Enter Name of AccountHolder:");
+		String name = getName();
+		 if (name.equals("exit")) {
+		 return;
+		 }
+
+//		System.out.print("Enter Date of Birth (yyyy-MM-dd):");
+		String dob = getDate();
 		
-		System.out.print("Enter Date of Birth (yyyy-MM-dd):");
-		String dob = sc1.nextLine();
 
 		System.out.print("Enter Address of Account Holder:");
 		String address = sc1.nextLine();
+		 if (name.equals("exit")) {
+			 return;
+			 }
 		System.out.print("Enter PAN of Account Holder:");
 		String pan = sc1.nextLine();
-
+		 if (name.equals("exit")) {
+			 return;
+			 }
 		System.out.print("Enter AdharNumber of AccountHolder:");
-		String adhar = sc1.nextLine().trim();
-
+		String adhar = getAdhar();
+		 if (name.equals("exit")) {
+			 return;
+			 }
 		System.out.print("Enter Mobile Number:");
-		String mobNo = sc1.nextLine().trim();
-
+		String mobNo =getMobNo();
+		 
 		System.out.print("Enter Money for opening account:");
 		try {
 			int money = (Integer.parseInt(sc1.nextLine().trim()));
@@ -403,9 +412,8 @@ public class BankVersion2 implements BankInterface1 {
 	@Override
 	public void updateHandle() {
 		boolean exit1 = true;
-		
 		String name = null;
-		int bl;
+
 		try {
 			// if (exit2) {
 			String acno = getAcccountValidNumber();
@@ -420,7 +428,7 @@ public class BankVersion2 implements BankInterface1 {
 						&& (acno.equals(myCustomerArrayList.get(i).getCustomerAccno()))) {
 
 					String name2 = getName();
-					//System.out.println("Valid String is: " + name2);
+					// System.out.println("Valid String is: " + name2);
 
 					if (name2.equals("exit")) {
 						break;
@@ -545,7 +553,7 @@ public class BankVersion2 implements BankInterface1 {
 	@Override
 	public void depositHandle() {
 		System.out.print("Enter Account Number In Which Amount To be Deposited:");
-		String acno = sc1.nextLine();
+		String acno = sc1.nextLine().trim();
 
 		for (int i = 0; i < myCustomerArrayList.size(); i++) {
 			if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
@@ -570,7 +578,7 @@ public class BankVersion2 implements BankInterface1 {
 	@Override
 	public void withdrawHandle() {
 		System.out.println("Enter Account Number In Which Amount To be Withdrawl:");
-		String acno = sc1.nextLine();
+		String acno = sc1.nextLine().trim();
 		for (int i = 0; i < myCustomerArrayList.size(); i++) {
 			if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
 				System.out.println("Enter Amount to be withdraw from Account");
@@ -595,7 +603,7 @@ public class BankVersion2 implements BankInterface1 {
 	public String getAcccountValidNumber() {
 		try {
 			System.out.println("Enter account Number to be Printed in Format->SNGURB-1");
-			String acno = sc1.nextLine();
+			String acno = sc1.nextLine().trim();
 			if (acno.startsWith("SNGURB")) {
 				// return sc1;
 				return acno;
@@ -714,36 +722,41 @@ public class BankVersion2 implements BankInterface1 {
 		boolean ready2 = Pattern.matches("^[1-9][0-9]{15}", adhar);
 		if (ready2) {
 			return adhar;
-		}else if (adhar.equals("exit")) {
+		} else if (adhar.equals("exit")) {
 			return "exit";
 		} else
-		return null;
+			return null;
 	}
 
 	public String getAdhar() {
 		String adhar = getValidAdhar();
 		while (adhar == null) {
-			System.out.println("Enter correct Adhar number or exit to return:");
+			System.out.println("Adhar Number Must Contain Digits Only");
+			System.out.println("Special Characters And Symbols Are Not Allowed");
+			System.out.println("Enter 16 digit Adhar number or Enter 'exit' to return:");
 			adhar = getValidAdhar();
 		}
 		return adhar;
 	}
-	
-	public String getValidDate(){
-		 String date = sc1.nextLine().trim();
-		boolean isVslidDate= Pattern.matches("\\d{4}-[01]\\d-[0-3]\\d",date);
-		if(isVslidDate){
+
+	public String getValidDate() {
+		String date = sc1.nextLine().trim();
+		boolean isVslidDate = Pattern.matches("\\d{4}-[01]\\d-[0-3]\\d", date);
+		if (isVslidDate) {
 			return date;
-		}else
-		return null;
+		} else if (date.equals("exit")) {
+			return "exit";
+		}
+			return null;
 	}
-public String getDate(){
-	String date = getValidDate();
-	while(date==null){
-		System.out.println("Enter Valid Date in yyyy-MM-dd Format");
-		 date = getValidDate();
+
+	public String getDate() {
+		String date = getValidDate();
+		while (date == null) {
+			System.out.println("Enter Valid Date in yyyy-MM-dd Format");
+			date = getValidDate();
+		}
+		return date;
 	}
-			return date;
-}
 
 }

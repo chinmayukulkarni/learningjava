@@ -32,7 +32,7 @@ public interface BankInterface1 {
 
 	public void readFile_Version1() throws IOException;
 
-	public void createHaandle() throws IOException;
+	public void createHandle() throws IOException;
 
 	public void updateHandle();
 
