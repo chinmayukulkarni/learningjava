@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public interface BankInterface1 {
-	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money,
+	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, String money,
 			String mobNo) throws IOException;
 
 	public Customer[] getAllCustomersInBank();
@@ -40,10 +40,10 @@ public interface BankInterface1 {
 
 	public void printOneHandle();
 
-	public void depositHandle();
+	public int depositHandle();
 
-	public void withdrawHandle();
+	public String withdrawHandle();
 
-	public String getAcccountValidNumber();
+	public String getValidAcccountNumber();
 
 }

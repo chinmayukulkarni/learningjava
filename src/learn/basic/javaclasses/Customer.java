@@ -7,9 +7,17 @@ public class Customer {
 	String customerAddress;
 	String customerPAN;
 	String customerAdhar;
-	int money;
+	String money;
 	String mobNo;
 	boolean flag;
+
+	public String getMoney() {
+		return money;
+	}
+
+	public void setMoney(String money) {
+		this.money = money;
+	}
 
 	public boolean isFlag() {
 		return flag;
@@ -65,16 +73,6 @@ public class Customer {
 
 	public void setCustomerPAN(String customerPAN) {
 		this.customerPAN = customerPAN;
-	}
-
-	
-
-	public int getMoney() {
-		return money;
-	}
-
-	public void setMoney(int money) {
-		this.money = money;
 	}
 
 	public String getCustomerAdhar() {

@@ -28,6 +28,8 @@ public class BankVersion2 implements BankInterface1 {
 	boolean ready;
 	int b2;
 
+	int money2 = 0;
+
 	public BankVersion2() {
 
 		// This is the place from where you will execute read file method
@@ -91,7 +93,7 @@ public class BankVersion2 implements BankInterface1 {
 				cust.setCustomerAddress(st.nextToken());
 				cust.setCustomerPAN(st.nextToken());
 				cust.setCustomerAdhar(st.nextToken().trim());
-				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
+				cust.setMoney(st.nextToken().trim());
 				cust.setMobNo(st.nextToken().trim());
 			}
 			myCustomerArrayList.add(cust);
@@ -105,7 +107,7 @@ public class BankVersion2 implements BankInterface1 {
 		// System.out.println(customerCounter);
 	}
 
-	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, int money,
+	public String createAccountInBank(String name, String dob, String addes, String pan, String adhar, String money,
 			String mobNo) throws IOException {
 
 		String customerAccountNumber = "SNGURB-" + (customerCounter);
@@ -183,7 +185,7 @@ public class BankVersion2 implements BankInterface1 {
 	}
 
 	@Override
-	public Customer updateAccountFromAccountNo(String acno, String name, String addes, String dob, String pan,
+	public Customer updateAccountFromAccountNo(String acno, String name, String dob, String addes, String pan,
 			String adhar, String mobNo) {
 		try {
 			for (int i = 0; i < myCustomerArrayList.size(); i++) {
@@ -216,8 +218,9 @@ public class BankVersion2 implements BankInterface1 {
 		for (int i = 0; i < myCustomerArrayList.size(); i++) {
 			Customer cust = myCustomerArrayList.get(i);
 			if (cust.getCustomerAccno().equals(accountNumber)) {
-				int totalMoney = cust.getMoney() + amount;
-				cust.setMoney(totalMoney);
+				int totalMoney = Integer.parseInt(cust.getMoney()) + amount;
+				String totalMoney1 = Integer.toString(totalMoney);
+				cust.setMoney(totalMoney1);
 				return cust;
 			}
 		}
@@ -229,8 +232,9 @@ public class BankVersion2 implements BankInterface1 {
 		for (int i = 0; i < myCustomerArrayList.size(); i++) {
 			Customer cust = myCustomerArrayList.get(i);
 			if (cust.getCustomerAccno().equals(accountNumber)) {
-				int totalMoney = cust.getMoney() - amount;
-				cust.setMoney(totalMoney);
+				int totalMoney = Integer.parseInt(cust.getMoney()) - amount;
+				String totalMoney1 = Integer.toString(totalMoney);
+				cust.setMoney(totalMoney1);
 				return cust;
 			}
 		}
@@ -315,7 +319,7 @@ public class BankVersion2 implements BankInterface1 {
 				cust.setCustomerAddress(st.nextToken().trim());
 				cust.setCustomerPAN(st.nextToken().trim());
 				cust.setCustomerAdhar(st.nextToken().trim());
-				cust.setMoney(Integer.parseInt(st.nextToken().trim()));
+				cust.setMoney(st.nextToken().trim());
 
 				if (st.nextToken().trim().equals("true")) {
 					cust.setFlag(true);
@@ -340,43 +344,39 @@ public class BankVersion2 implements BankInterface1 {
 	@Override
 	public void createHandle() throws IOException {
 
-//		System.out.print("Enter Name of AccountHolder:");
+		// System.out.print("Enter Name of AccountHolder:");
 		String name = getName();
-		 if (name.equals("exit")) {
-		 return;
-		 }
+		if (name.equals("exit")) {
+			return;
+		}
 
-//		System.out.print("Enter Date of Birth (yyyy-MM-dd):");
+		// System.out.print("Enter Date of Birth (yyyy-MM-dd):");
 		String dob = getDate();
-		
 
 		System.out.print("Enter Address of Account Holder:");
 		String address = sc1.nextLine();
-		 if (name.equals("exit")) {
-			 return;
-			 }
+		if (name.equals("exit")) {
+			return;
+		}
 		System.out.print("Enter PAN of Account Holder:");
 		String pan = sc1.nextLine();
-		 if (name.equals("exit")) {
-			 return;
-			 }
+		if (name.equals("exit")) {
+			return;
+		}
 		System.out.print("Enter AdharNumber of AccountHolder:");
 		String adhar = getAdhar();
-		 if (name.equals("exit")) {
-			 return;
-			 }
-		System.out.print("Enter Mobile Number:");
-		String mobNo =getMobNo();
-		 
-		System.out.print("Enter Money for opening account:");
-		try {
-			int money = (Integer.parseInt(sc1.nextLine().trim()));
-			String AccountNo = createAccountInBank(name, dob, address, pan, adhar, money, mobNo); // "SNGURB-1"
-			System.out.println("Account has been successfully created with account number :" + AccountNo);
-		} catch (NumberFormatException ex) {
-			// handle your exception
-			System.out.println("Number Format Exception");
+		if (name.equals("exit")) {
+			return;
 		}
+		System.out.print("Enter Mobile Number:");
+		String mobNo = getMobNo();
+
+		System.out.print("Enter Money for opening account:");
+
+		String money = Integer.toString(getCash());
+
+		String AccountNo = createAccountInBank(name, dob, address, pan, adhar, money, mobNo); // "SNGURB-1"
+		System.out.println("Account has been successfully created with account number :" + AccountNo);
 
 	}
 
@@ -416,7 +416,10 @@ public class BankVersion2 implements BankInterface1 {
 
 		try {
 			// if (exit2) {
-			String acno = getAcccountValidNumber();
+			String acno = getAccountNumber();
+			if (acno.equals("exit")) {
+				return;
+			}
 			// System.out.print("Enter Account Number in
 			// Format->SNGURB-1:");
 			// String acno = sc1.nextLine();
@@ -427,10 +430,10 @@ public class BankVersion2 implements BankInterface1 {
 				if ((myCustomerArrayList.get(i).isFlag())
 						&& (acno.equals(myCustomerArrayList.get(i).getCustomerAccno()))) {
 
-					String name2 = getName();
-					// System.out.println("Valid String is: " + name2);
+					name = getName();
+					System.out.println("Valid String is: " + name);
 
-					if (name2.equals("exit")) {
+					if (name.equals("exit")) {
 						break;
 					}
 
@@ -446,7 +449,7 @@ public class BankVersion2 implements BankInterface1 {
 					System.out.print("Enter PAN of Account Holder:");
 					String pan = sc1.nextLine();
 
-					System.out.print("Enter 16 Digit AdharNumber of AccountHolder:");
+					System.out.print("Enter AdharNumber f AccountHolder:");
 					String adhar = getAdhar();
 					if (adhar.equals("exit")) {
 						exit1 = false;
@@ -498,12 +501,15 @@ public class BankVersion2 implements BankInterface1 {
 	public void deleteHandle() {
 
 		try {
-			String accountNumber = getAcccountValidNumber();
-			deleteAccount(accountNumber);
+			String accountNumber = getAccountNumber();
+			if (accountNumber.equals("exit")) {
+				return;
+			} else
+				deleteAccount(accountNumber);
 
 		} catch (Exception e) {
 			System.out.println("Enter String In Correct Format" + e);
-			deleteHandle();
+
 		}
 
 	}
@@ -515,8 +521,10 @@ public class BankVersion2 implements BankInterface1 {
 		int b1;
 		try {
 
-			String acno = getAcccountValidNumber();
-
+			String acno = getAccountNumber();
+			if (acno.equals("exit")) {
+				return;
+			}
 			for (int i = 0; i < myCustomerArrayList.size(); i++) {
 
 				// Check if the account number is valid and matches with the
@@ -539,82 +547,89 @@ public class BankVersion2 implements BankInterface1 {
 				b1 = 0;
 			}
 		} catch (Exception e) {
-			System.out.println("Enter In Correct Format");
-			System.out.println("Do you want to continue?(1/0)");
-			b1 = Integer.parseInt(sc1.nextLine().trim());
+			System.out.println("Enter In Correct Format" + e);
 
-			while (b1 == 1) {
-				printOneHandle();
-			}
 		}
 
 	}
 
-	@Override
-	public void depositHandle() {
-		System.out.print("Enter Account Number In Which Amount To be Deposited:");
-		String acno = sc1.nextLine().trim();
+	public int isValidDeposit(String acno) {
 
+		int money = getCash();
+		depositMoney(money, acno);
+		return money;
+	}
+
+	@Override
+	public int depositHandle() {
+		String acno = getAccountNumber();
+		boolean noacno = true;
+		int money = 0;
 		for (int i = 0; i < myCustomerArrayList.size(); i++) {
 			if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
-				System.out.print("Enter Amount to be Deposited in Account");
-				try {
-					int money = (Integer.parseInt(sc1.nextLine().trim()));
-					if (depositMoney(money, acno) == null) {
-						System.out.println("String is null");
-					}
-					System.out.println("Money Diposited Successfully!");
-				} catch (NumberFormatException e) {
-					System.out.println("Enter Numbers only");
-					depositHandle();
+				noacno = false;
+				money = isValidDeposit(acno);
+				while (money == 0) {
+					System.out.println("Enter amount to Deposit:");
+					money = isValidDeposit(acno);
+					System.out.println("Amount Deposited Successfully");
 				}
-			} else {
-				System.out.println("Enter Correct Account Number only");
-				depositHandle();
 			}
 		}
+		if (noacno) {
+			System.out.println("Account not present in Database");
+		}
+		return money;
 	}
 
 	@Override
-	public void withdrawHandle() {
-		System.out.println("Enter Account Number In Which Amount To be Withdrawl:");
+	public String withdrawHandle() {
+		// int money = 0;
+		// System.out.println("Enter Account Number In Which Amount To be
+		// Withdrawl:");
+		// String acno = sc1.nextLine().trim();
+		// for (int i = 0; i < myCustomerArrayList.size(); i++) {
+		// if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
+		// System.out.println("Enter Amount to be withdraw from Account");
+		//
+		// try {
+		// money = sc1.nextLine().trim();
+		// withdrawMoney(money, acno);
+		// System.out.println("Money Withdraw Successfully!");
+		// } catch (Exception e) {
+		// System.out.println("Enter Numbers only");
+		// withdrawHandle();
+		// }
+		// } else {
+		// System.out.println("Enter Correct Account Number only");
+		// withdrawHandle();
+		// }
+		// }
+		return null;
+
+	}
+
+	@Override
+	public String getValidAcccountNumber() {
+
+		System.out.println("Enter account Number to be Printed in Format->SNGURB-1");
 		String acno = sc1.nextLine().trim();
-		for (int i = 0; i < myCustomerArrayList.size(); i++) {
-			if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
-				System.out.println("Enter Amount to be withdraw from Account");
-
-				try {
-					int money = (Integer.parseInt(sc1.nextLine().trim()));
-					withdrawMoney(money, acno);
-					System.out.println("Money Withdraw Successfully!");
-				} catch (Exception e) {
-					System.out.println("Enter Numbers only");
-					withdrawHandle();
-				}
-			} else {
-				System.out.println("Enter Correct Account Number only");
-				withdrawHandle();
-			}
+		if (acno.startsWith("SNGURB")) {
+			// return sc1;
+			return acno;
+		} else if (acno.equals("exit")) {
+			return "exit";
+		} else {
+			return null;
 		}
-
 	}
 
-	@Override
-	public String getAcccountValidNumber() {
-		try {
-			System.out.println("Enter account Number to be Printed in Format->SNGURB-1");
-			String acno = sc1.nextLine().trim();
-			if (acno.startsWith("SNGURB")) {
-				// return sc1;
-				return acno;
-			} else {
-				System.out.println("TRY AGAIN:");
-				return getAcccountValidNumber();
-			}
-		} catch (Exception e) {
-			System.out.println("Try again");
-			return getAcccountValidNumber();
+	public String getAccountNumber() {
+		String acno = getValidAcccountNumber();
+		while (acno == null) {
+			acno = getValidAcccountNumber();
 		}
+		return acno;
 	}
 
 	@Override
@@ -660,21 +675,21 @@ public class BankVersion2 implements BankInterface1 {
 	public String getValidName() {
 
 		System.out.print("Enter Name of AccountHolder:(or exit)");
-		String name1 = sc1.nextLine().trim();
-		boolean ready = Pattern.matches("[a-z A-Z]*", name1);
+		String name = sc1.nextLine().trim();
+		boolean ready = Pattern.matches("[a-z A-Z]*", name);
 
 		if (ready) {
-
-			return name1;
-		} else
+			return name;
+		} else {
 			return null;
-
+		}
 	}
 
 	public String getName() {
 
 		String returnedString = getValidName();
 		while (returnedString == null) {
+			System.out.println("Given Input Is Invalid");
 			System.out.println("Name should not contain any numbers And Special Characters");
 			returnedString = getValidName();
 		}
@@ -740,6 +755,7 @@ public class BankVersion2 implements BankInterface1 {
 	}
 
 	public String getValidDate() {
+		System.out.println("Enter Date in yyyy-MM-dd Format");
 		String date = sc1.nextLine().trim();
 		boolean isVslidDate = Pattern.matches("\\d{4}-[01]\\d-[0-3]\\d", date);
 		if (isVslidDate) {
@@ -747,16 +763,44 @@ public class BankVersion2 implements BankInterface1 {
 		} else if (date.equals("exit")) {
 			return "exit";
 		}
-			return null;
+		return null;
 	}
 
 	public String getDate() {
 		String date = getValidDate();
 		while (date == null) {
+			System.out.println("Given Input is not Valid");
+			System.out.println("Alphabets and Digits are not allowed");
 			System.out.println("Enter Valid Date in yyyy-MM-dd Format");
 			date = getValidDate();
 		}
 		return date;
 	}
 
+	public int getValidMoney() {
+		int money1 = 0;
+		System.out.println("Enter Amount:");
+		String money = sc1.nextLine().trim();
+		boolean validMoney = Pattern.matches("^[1-9][0-9]*", money);
+		if (validMoney) {
+			money1 = Integer.parseInt(money);
+
+			return money1;
+		} else {
+			return 0;
+		}
+	}
+
+	public int getCash() {
+		int money1 = 0;// Integer.toString()
+		money1 = getValidMoney();
+
+		if (money1 == 0) {
+			System.out.println("Given Input is not Valid");
+			System.out.println("Alphabets are not allowed");
+			money1 = getValidMoney();
+		}
+		return money1;
+
+	}
 }
