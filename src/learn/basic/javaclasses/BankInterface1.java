@@ -42,7 +42,7 @@ public interface BankInterface1 {
 
 	public int depositHandle();
 
-	public String withdrawHandle();
+	public int withdrawHandle();
 
 	public String getValidAcccountNumber();
 

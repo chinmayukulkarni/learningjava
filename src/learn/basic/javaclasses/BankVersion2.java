@@ -207,7 +207,7 @@ public class BankVersion2 implements BankInterface1 {
 			}
 		} catch (Exception e) {
 
-			System.out.println("Error");
+			System.out.println("Error" + e);
 		}
 
 		return null;
@@ -557,6 +557,7 @@ public class BankVersion2 implements BankInterface1 {
 
 		int money = getCash();
 		depositMoney(money, acno);
+		System.out.println("Amount Deposited Successfully");
 		return money;
 	}
 
@@ -570,9 +571,8 @@ public class BankVersion2 implements BankInterface1 {
 				noacno = false;
 				money = isValidDeposit(acno);
 				while (money == 0) {
-					System.out.println("Enter amount to Deposit:");
+					// System.out.println("Enter amount to Deposit:");
 					money = isValidDeposit(acno);
-					System.out.println("Amount Deposited Successfully");
 				}
 			}
 		}
@@ -582,32 +582,55 @@ public class BankVersion2 implements BankInterface1 {
 		return money;
 	}
 
-	@Override
-	public String withdrawHandle() {
-		// int money = 0;
-		// System.out.println("Enter Account Number In Which Amount To be
-		// Withdrawl:");
-		// String acno = sc1.nextLine().trim();
-		// for (int i = 0; i < myCustomerArrayList.size(); i++) {
-		// if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
-		// System.out.println("Enter Amount to be withdraw from Account");
-		//
-		// try {
-		// money = sc1.nextLine().trim();
-		// withdrawMoney(money, acno);
-		// System.out.println("Money Withdraw Successfully!");
-		// } catch (Exception e) {
-		// System.out.println("Enter Numbers only");
-		// withdrawHandle();
-		// }
-		// } else {
-		// System.out.println("Enter Correct Account Number only");
-		// withdrawHandle();
-		// }
-		// }
-		return null;
+	public int isValidWithdrawl(String acno) {
 
+		int money = getCash();
+		withdrawMoney(money, acno);
+		System.out.println("Amount Withdrawl Successfully");
+		return money;
 	}
+
+	@Override
+	public int withdrawHandle() {
+		String acno = getAccountNumber();
+		boolean noacno = true;
+		int money = 0;
+		for (int i = 0; i < myCustomerArrayList.size(); i++) {
+			if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
+				noacno = false;
+				money = isValidWithdrawl(acno);
+				while (money == 0) {
+					// System.out.println("Enter amount to Deposit:");
+					money = isValidWithdrawl(acno);
+				}
+			}
+		}
+		if (noacno) {
+			System.out.println("Account not present in Database");
+		}
+		return money;
+	}
+	// int money = 0;
+	// System.out.println("Enter Account Number In Which Amount To be
+	// Withdrawl:");
+	// String acno = sc1.nextLine().trim();
+	// for (int i = 0; i < myCustomerArrayList.size(); i++) {
+	// if (myCustomerArrayList.get(i).getCustomerAccno().equals(acno)) {
+	// System.out.println("Enter Amount to be withdraw from Account");
+	//
+	// try {
+	// money = sc1.nextLine().trim();
+	// withdrawMoney(money, acno);
+	// System.out.println("Money Withdraw Successfully!");
+	// } catch (Exception e) {
+	// System.out.println("Enter Numbers only");
+	// withdrawHandle();
+	// }
+	// } else {
+	// System.out.println("Enter Correct Account Number only");
+	// withdrawHandle();
+	// }
+	// }
 
 	@Override
 	public String getValidAcccountNumber() {
@@ -795,11 +818,12 @@ public class BankVersion2 implements BankInterface1 {
 		int money1 = 0;// Integer.toString()
 		money1 = getValidMoney();
 
-		if (money1 == 0) {
+		while (money1 == 0) {
 			System.out.println("Given Input is not Valid");
 			System.out.println("Alphabets are not allowed");
 			money1 = getValidMoney();
 		}
+
 		return money1;
 
 	}
