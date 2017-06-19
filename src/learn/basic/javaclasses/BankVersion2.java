@@ -354,12 +354,14 @@ public class BankVersion2 implements BankInterface1 {
 		String dob = getDate();
 
 		System.out.print("Enter Address of Account Holder:");
-		String address = sc1.nextLine();
+		String rightTrimedAddress = sc1.nextLine().trim();
+		String address = rightTrimedAddress.replaceAll("^\\s+", "");
 		if (name.equals("exit")) {
 			return;
 		}
 		System.out.print("Enter PAN of Account Holder:");
-		String pan = sc1.nextLine();
+		String rightTrimedPan = sc1.nextLine().trim();
+		String pan = rightTrimedPan.replaceAll("^\\s+", "");
 		if (name.equals("exit")) {
 			return;
 		}
@@ -441,13 +443,15 @@ public class BankVersion2 implements BankInterface1 {
 					String dob = getDate();
 
 					System.out.print("Enter Address of Account Holder:");
-					String address = sc1.nextLine();
+					String rightTrimedAddress = sc1.nextLine().trim();
+					String address = rightTrimedAddress.replaceAll("^\\s+", "");
 					if (address.equals("exit")) {
 						exit1 = false;
 						break;
 					}
 					System.out.print("Enter PAN of Account Holder:");
-					String pan = sc1.nextLine();
+					String rightTrimedPan = sc1.nextLine().trim();
+					String pan = rightTrimedPan.replaceAll("^\\s+", "");
 
 					System.out.print("Enter AdharNumber f AccountHolder:");
 					String adhar = getAdhar();
@@ -636,7 +640,8 @@ public class BankVersion2 implements BankInterface1 {
 	public String getValidAcccountNumber() {
 
 		System.out.println("Enter account Number to be Printed in Format->SNGURB-1");
-		String acno = sc1.nextLine().trim();
+		String rightTrimedacno = sc1.nextLine().trim();
+		String acno = rightTrimedacno.replaceAll("^\\s+", "");
 		if (acno.startsWith("SNGURB")) {
 			// return sc1;
 			return acno;
@@ -698,7 +703,8 @@ public class BankVersion2 implements BankInterface1 {
 	public String getValidName() {
 
 		System.out.print("Enter Name of AccountHolder:(or exit)");
-		String name = sc1.nextLine().trim();
+		String rightTrimed = sc1.nextLine().trim();
+		String name = rightTrimed.replaceAll("^\\s+", "");
 		boolean ready = Pattern.matches("[a-z A-Z]*", name);
 
 		if (ready) {
@@ -736,7 +742,8 @@ public class BankVersion2 implements BankInterface1 {
 	 */
 	public String getValidMobileNo() {
 
-		String mobileNumber = sc1.nextLine().trim();
+		String rightTrimedMobileNumber = sc1.nextLine().trim();
+		String mobileNumber = rightTrimedMobileNumber.replaceAll("^\\s+", "");
 		boolean isValidMobNo = Pattern.matches("^[1-9][0-9]{9}", mobileNumber);
 		if (isValidMobNo) {
 			return mobileNumber;
@@ -756,7 +763,8 @@ public class BankVersion2 implements BankInterface1 {
 	}
 
 	public String getValidAdhar() {
-		String adhar = sc1.nextLine().trim();
+		String rightTrimedAdhar = sc1.nextLine().trim();
+		String adhar = rightTrimedAdhar.replaceAll("^\\s+", "");
 		boolean ready2 = Pattern.matches("^[1-9][0-9]{15}", adhar);
 		if (ready2) {
 			return adhar;
@@ -779,7 +787,8 @@ public class BankVersion2 implements BankInterface1 {
 
 	public String getValidDate() {
 		System.out.println("Enter Date in yyyy-MM-dd Format");
-		String date = sc1.nextLine().trim();
+		String rightTrimedDate = sc1.nextLine().trim();
+		String date = rightTrimedDate.replaceAll("^\\s+", "");
 		boolean isVslidDate = Pattern.matches("\\d{4}-[01]\\d-[0-3]\\d", date);
 		if (isVslidDate) {
 			return date;
@@ -803,7 +812,8 @@ public class BankVersion2 implements BankInterface1 {
 	public int getValidMoney() {
 		int money1 = 0;
 		System.out.println("Enter Amount:");
-		String money = sc1.nextLine().trim();
+		String rightTrimedMoney = sc1.nextLine().trim();
+		String money = rightTrimedMoney.replaceAll("^\\s+", "");
 		boolean validMoney = Pattern.matches("^[1-9][0-9]*", money);
 		if (validMoney) {
 			money1 = Integer.parseInt(money);
